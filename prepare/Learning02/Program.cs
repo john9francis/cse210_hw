@@ -6,9 +6,13 @@ class Program
 {
     static void Main(string[] args)
     {
-        Console.WriteLine("Hello");
-        job1 = new Job();
+        Job job1 = new Job();
         job1._jobTitle = "programmer";
+        job1._company = "Microsoft";
+        job1._startYear = 2020;
+        job1._endYear = 2021;
+
+        Console.WriteLine($"{job1._jobTitle}, {job1._company}, {job1._startYear}, {job1._endYear}");
 
     }
 }
