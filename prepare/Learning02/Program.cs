@@ -6,6 +6,7 @@ class Program
 {
     static void Main(string[] args)
     {
+        // defining 2 jobs;
         Job job1 = new Job();
         job1._jobTitle = "Programmer";
         job1._company = "Microsoft";
@@ -18,16 +19,15 @@ class Program
         job2._startYear = 2019;
         job2._endYear = 2023;
 
-        job1.DisplayJobDetails();
-        job2.DisplayJobDetails();
-
+        // adding jobs to resume;
         Resume resume1 = new Resume();
+        resume1._name = "John Francis";
         resume1._jobList.Add(job1);
         resume1._jobList.Add(job2);
 
+        // displaying the resume;
         resume1.DisplayResume();
 
-    
 
 
     }
