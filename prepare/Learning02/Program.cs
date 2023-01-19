@@ -13,13 +13,21 @@ class Program
         job1._endYear = 2021;
 
         Job job2 = new Job();
+        job2._jobTitle = "Software engineer";
         job2._company = "Apple";
+        job2._startYear = 2019;
+        job2._endYear = 2023;
 
         job1.DisplayJobDetails();
         job2.DisplayJobDetails();
 
         Resume resume1 = new Resume();
-        resume1._
+        resume1._jobList.Add(job1);
+        resume1._jobList.Add(job2);
+
+        resume1.DisplayResume();
+
+    
 
 
     }
