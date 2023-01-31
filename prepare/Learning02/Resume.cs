@@ -3,7 +3,7 @@ namespace Learning02
 {
 public class Resume
 {
-    public string _name = "John";
+    public string _name = "";
     public List<Job> _jobList = new List<Job>();
 
     public void DisplayResume()

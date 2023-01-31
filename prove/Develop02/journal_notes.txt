@@ -1,0 +1,56 @@
+What does the program do?
+
+- show the user a prompt
+- let them write their response to the prompt
+- save the prompt, response, and todays date
+- display the journal
+- save the journal to a file
+- load the journal from a file
+- provide a menu to choose options
+    1. Write
+    2. display
+    3. load
+    4. save
+    5. quit
+    what would you like to do?: 1
+
+What user inputs does it have?
+- responses to the prompts
+
+What output does it produce?
+- prompts
+- journal
+
+How does the program end?
+- when the user chooses the "quit" option form the menu.
+
+
+DESIGN:
+
+Menu
+-------
+_items : list
+-------
+Display() : void
+Quit() : void
+GetInput() : int
+
+
+JournalEntry
+-------------
+_prompt : string
+_prompts : list
+_date : string
+_entry : string
+--------------
+Write() : string
+
+
+Journal
+--------------
+_entry : string
+------------
+Save() : void
+Load() : void
+Display() : void
+
