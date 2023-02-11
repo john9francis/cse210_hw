@@ -1,0 +1,8 @@
+- store reference and scripture
+- display whole scripture
+- quit:program quits
+- enter:hide a few random words
+- once no more words, program ends
+
+- include 3 classes
+- multiple constructors
