@@ -49,15 +49,24 @@ class Program
         verse1.SetVerse("I nephi, having been born of goodly parents, therefore having a knowledge...");
         verse1.CreateWordList();
 
+        // adding verse to our scripture;
+        Scripture s1 = new Scripture();
+        s1.SetScriptureVerse(verse1);
+        s1.SetScriptureReference("1 Nephi", 1, 1,3);
+
         bool x = true;
         while (x == true)
         {
+        int j = 0;
         Console.Clear();
         {
             // display the verse;
-            foreach (int i in Enumerable.Range(0,verse1._verseWords.Count()))
+            Verse v = new Verse();
+            v = s1.GetScriptureVerse(j);
+            Console.Write($"{s1.GetScriptureReference()}: ");
+            foreach (int i in Enumerable.Range(0,v._verseWords.Count()))
             {
-                Console.Write(verse1.GetVWord(i));
+                Console.Write(v.GetVWord(i));
                 Console.Write(" ");
             }
             Console.WriteLine();
@@ -69,13 +78,13 @@ class Program
             {
                 x = false;
             }
-            else if (verse1.GetUndashedWords() == 0)
+            else if (v.GetUndashedWords() == 0)
             {
                 x = false;
             }
 
             // dash some random words;
-            verse1.DashRandomWords();
+            v.DashRandomWords();
         }
         }
 

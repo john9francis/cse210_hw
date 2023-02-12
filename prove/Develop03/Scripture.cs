@@ -1,5 +1,75 @@
 public class Scripture
 {
+    // setup stuff;-------------------------------------------------------;
+    List<Verse> _verseList;
+    string _reference;
+    List<int> _verseNumbers;
+    public Scripture()
+    {
+        _verseList = new List<Verse>();
+        _reference = "";
+        _verseNumbers = new List<int>();
+    }
+    public Scripture(string book,int chapter, int verse)
+    {
+        _verseList = new List<Verse>();
+        _reference = $"{book} {chapter}, {verse}";
+        _verseNumbers = new List<int>();
+        _verseNumbers.Add(verse);
+    }
+    public Scripture(string book,int chapter, int startVerse, int endVerse)
+    {
+        _verseList = new List<Verse>();
+        _reference = $"{book} {chapter}, {startVerse}-{endVerse}";
+        _verseNumbers = new List<int>();
+        for (int i=startVerse; i<endVerse; i++)
+        {
+            _verseNumbers.Add(i);
+        }
+    }
+
+    public void SetScriptureVerse(Verse _verse)
+    {
+        _verseList.Add(_verse);
+    }
+    public Verse GetScriptureVerse(int i)
+    {
+        return _verseList[i];
+    }
+    public void SetScriptureReference(string book, int chapter, int startVerse, int endVerse=0)
+    {
+        if (endVerse == 0)
+        {
+            _reference = $"{book} {chapter}, {startVerse}";
+        }
+        else
+        {
+            _reference = $"{book} {chapter}, {startVerse}-{endVerse}";
+        }
+    }
+    public string GetScriptureReference()
+    {
+        return _reference;
+    }
+    //-------------------------------------------------------------------------------------;
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+/* THIS WAS MY FIRST ATTEMPT:
+
+public class Scripture
+{
     public List<Verse> _verseList;
     public string _reference;
     public List<int> _numberList;
@@ -82,3 +152,5 @@ public class Scripture
     }
 
 }
+
+*/
