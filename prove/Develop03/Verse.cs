@@ -7,11 +7,19 @@ public class Verse
     public void SetVerse(string verse)
     {
         _verse = verse;
+        CreateWordList();
     }
 
     public string GetVerse()
     {
-        return _verse;
+        string v = "";
+        foreach(Word _w in _verseWords)
+        {
+            string _w1 = _w.GetWord();
+            v += _w1;
+            v += " ";
+        }
+        return v;
     }
 
     public string GetVWord(int i)
@@ -20,7 +28,7 @@ public class Verse
     }
 
     // other methods;
-    public void CreateWordList()
+    private void CreateWordList()
     // this turns the verse into a list of Word objects;
     {
         string[] _words = _verse.Split(" ");

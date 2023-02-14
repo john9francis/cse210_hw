@@ -1,9 +1,9 @@
 public class Scripture
 {
     // setup stuff;-------------------------------------------------------;
-    List<Verse> _verseList;
-    string _reference;
-    List<int> _verseNumbers;
+    public List<Verse> _verseList;
+    public string _reference;
+    public List<int> _verseNumbers;
     public Scripture()
     {
         _verseList = new List<Verse>();
@@ -28,9 +28,10 @@ public class Scripture
         }
     }
 
-    public void SetScriptureVerse(Verse _verse)
+    public void SetScriptureVerse(Verse _verse, int i)
     {
         _verseList.Add(_verse);
+        _verseNumbers.Add(i);
     }
     public Verse GetScriptureVerse(int i)
     {
@@ -52,6 +53,35 @@ public class Scripture
         return _reference;
     }
     //-------------------------------------------------------------------------------------;
+
+    public int GetVersesAmount()
+    {
+        return _verseList.Count();
+    }
+
+    public string GetFullScripture()
+    {
+        string _fullScripture = "";
+        _fullScripture += GetScriptureReference();
+        _fullScripture += ": ";
+        _fullScripture += "\n";
+        for (int i=0; i<_verseList.Count(); i++)
+        {
+            _fullScripture += _verseNumbers[i];
+            _fullScripture += ": ";
+            _fullScripture += GetScriptureVerse(i).GetVerse();
+            _fullScripture += "\n";
+        }
+        return _fullScripture;
+    }
+
+    public void DashStuff()
+    {
+        foreach(Verse v in _verseList)
+        {
+            v.DashRandomWords();
+        }
+    }
 
 }
 
