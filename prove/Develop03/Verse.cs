@@ -1,7 +1,17 @@
 public class Verse
 {
-    public string _verse = "";
+    public string _verse;
     public List<Word> _verseWords = new List<Word>();
+
+    public Verse()
+    {
+        _verse = "";
+    }
+    public Verse(string verse)
+    {
+        _verse = verse;
+        CreateWordList();
+    }
 
     // getters and setters;
     public void SetVerse(string verse)
@@ -22,10 +32,6 @@ public class Verse
         return v;
     }
 
-    public string GetVWord(int i)
-    {
-        return _verseWords[i].GetWord();
-    }
 
     // other methods;
     private void CreateWordList()
@@ -41,11 +47,9 @@ public class Verse
         }
     }
 
-    public void DashRandomWords()
+    public void DashRandomWords(int _min=2, int _max=4)
+    /*Dashes a random amount of the words in the verse*/
     {
-        // min and max words to be dashed;
-        int _min = 2;
-        int _max = 4;
         Random _rnd = new Random();
         
         for (int _dashAmount = 0; _dashAmount < _rnd.Next(_min,_max); _dashAmount++)
@@ -54,7 +58,6 @@ public class Verse
             int _dash = _rnd1.Next(0,_verseWords.Count());
             _verseWords[_dash].DashWord();
         }
-
     }
 
     public int GetUndashedWords()
