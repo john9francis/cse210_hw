@@ -1,12 +1,7 @@
 public class Word
 {
-    public string _word;
+    private string _word;
     public bool dashed;
-
-    public Word()
-    {
-
-    }
 
     // setters and getters;
     public void SetWord(string w)

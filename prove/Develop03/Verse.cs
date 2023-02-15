@@ -1,7 +1,7 @@
 public class Verse
 {
-    public string _verse;
-    public List<Word> _verseWords = new List<Word>();
+    private string _verse;
+    private List<Word> _verseWords = new List<Word>();
 
     public Verse()
     {

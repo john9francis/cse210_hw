@@ -3,7 +3,7 @@ using System;
 class Program
 /*
 This is a scripture memorizing program. The default program has one scripture to memorize,
-and an option for the user to enter more scriptures. 
+and a Menu with many options for the user to enter more scriptures, view the scripture list, etc.
 */
 {
     static void Main(string[] args)

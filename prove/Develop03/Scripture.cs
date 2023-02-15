@@ -40,7 +40,7 @@ a scripture reference. */
         _verseList.Add(_verse);
         _verseNumbers.Add(i);
     }
-    public Verse GetScriptureVerse(int i)
+    private Verse GetScriptureVerse(int i)
     {
         return _verseList[i];
     }
@@ -60,10 +60,6 @@ a scripture reference. */
         return _reference;
     }
 
-    public int GetVersesAmount()
-    {
-        return _verseList.Count();
-    }
     public List<Verse> GetVerseList()
     {
         return _verseList;
