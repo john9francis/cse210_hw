@@ -1,6 +1,10 @@
 using System;
 
 class Program
+/*
+This is a scripture memorizing program. The default program has one scripture to memorize,
+and an option for the user to enter more scriptures. 
+*/
 {
     static void Main(string[] args)
     {
@@ -23,6 +27,7 @@ class Program
         s1.SetScriptureReference("1 Nephi", 1, 1,3);
         scriptureList.Add(s1);
 
+        // Functions ------------------------------------------------------------;
         Scripture CreateNewScripture()
         {
             Scripture s = new Scripture();
@@ -70,43 +75,95 @@ class Program
             return s;
         }
 
-
-
-        bool x = true;
-        // x = false; //FOR TESTING PURPOSES;
-        while (x)
+        void MemorizeScripture(Scripture s1)
         {
-            Console.Clear();
-            Console.WriteLine(s1.GetFullScripture());
-            Console.Write("Type \"Q\" to quit: ");
-            string entry = Console.ReadLine();
-
-            // quit if all the words are dashed;
-            int undashed = 0;
-            foreach (Verse verse in s1.GetVerseList())
+            bool x = true;
+            // x = false; //FOR TESTING PURPOSES;
+            while (x)
             {
-                undashed += verse.GetUndashedWords();
-                if (undashed == 0)
+                Console.Clear();
+                Console.WriteLine(s1.GetFullScripture());
+                Console.Write("Type \"Q\" to quit: ");
+                string entry = Console.ReadLine();
+
+                // quit if all the words are dashed;
+                int undashed = 0;
+                foreach (Verse verse in s1.GetVerseList())
+                {
+                    undashed += verse.GetUndashedWords();
+                    if (undashed == 0)
+                    {
+                        x = false;
+                    }
+                }
+
+                if (entry == "q" || entry == "Q")
                 {
                     x = false;
                 }
+                else
+                {
+                    s1.DashStuff();
+                }
+            }
             }
 
-            if (entry == "q" || entry == "Q")
+        // PROGRAM STARTS -------------------------------------------------------;
+        bool program = true;
+        while(program)
+        {
+            Console.Clear();
+            Console.WriteLine("Welcome to the scripture memorizing program.");
+            Console.WriteLine("What would you like to do?");
+            Console.WriteLine();
+            Console.WriteLine("To memorize a random scripture, press \"M.\"");
+            Console.WriteLine("To see the list of scriptures in the scripture list, press \"L.\"");
+            Console.WriteLine("To add a new scripture to the list, press \"A.\"");
+            Console.WriteLine("To quit, press \"Q.\"");
+            string selection = Console.ReadLine();
+            if (selection == "M" || selection == "m")
             {
-                x = false;
+                // choose random scripture from the list;
+                Random rnd = new Random();
+                int index = rnd.Next(0, scriptureList.Count());
+                Scripture s = scriptureList[index];
+                MemorizeScripture(s);
+                Console.WriteLine("Press enter to go back to the menu.");
+                Console.ReadLine();
+            }
+            else if (selection == "L" || selection == "l")
+            {
+                Console.Clear();
+                Console.WriteLine("Scripture list:");
+                Console.WriteLine();
+                foreach(Scripture s in scriptureList)
+                {
+                    Console.WriteLine(s.GetScriptureReference());
+                    
+                }
+                Console.WriteLine("(Press enter to go back to the menu)");
+                Console.ReadLine();
+            }
+            else if (selection == "A" || selection == "a")
+            {
+                Scripture s = CreateNewScripture();
+                scriptureList.Add(s);
+                Console.WriteLine("Scripture added. Press enter to return to main menu.");
+                Console.ReadLine();
+            }
+            else if (selection == "Q" || selection == "q")
+            {
+                program = false;
             }
             else
             {
-                s1.DashStuff();
+                Console.WriteLine("Sorry, invalid choice. Press enter to make another choice.");
+                Console.ReadLine();
             }
         }
+        
 
-
-        // Ask user to create some new scriptures;
-        Scripture scripture = CreateNewScripture();
-        Console.WriteLine(scripture.GetFullScripture());
-
+        
 
 
     }
