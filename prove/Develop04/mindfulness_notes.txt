@@ -1,0 +1,23 @@
+Classes:
+
+Menu
+
+Activity
+string _startingMessage
+string _prompt
+string _finishingMessage
+int or float _duration
+-----------
+void DisplaySpinner
+
+Breathing : Activity
+-----------
+void Breate
+
+Reflection : Activity
+-----------
+string AnswerQuestions
+
+Listing : Activity
+-----------
+string MakeList
