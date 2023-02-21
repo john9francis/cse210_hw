@@ -1,7 +1,7 @@
 public class MathAssignment : Assignment
 {
-    string _textbookSection;
-    string _problems;
+    private string _textbookSection;
+    private string _problems;
     public MathAssignment(
     string name, 
     string topic, 

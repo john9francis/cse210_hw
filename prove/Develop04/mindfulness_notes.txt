@@ -1,23 +1,32 @@
 Classes:
 
 Menu
+List<string> _menuOptions
+-----------
+int DisplayMenu
 
 Activity
-string _startingMessage
-string _prompt
+string _name
+string _description
 string _finishingMessage
 int or float _duration
 -----------
 void DisplaySpinner
+void Countdown
+void DisplayStartMessage
+int ChooseDuration
+void DisplayEndMessage
 
 Breathing : Activity
 -----------
 void Breate
 
 Reflection : Activity
+List<string> _promptList
 -----------
-string AnswerQuestions
+void AnswerQuestions
 
 Listing : Activity
+List<string> _list
 -----------
 string MakeList

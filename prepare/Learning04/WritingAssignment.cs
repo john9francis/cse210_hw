@@ -1,6 +1,6 @@
 public class WritingAssignment : Assignment
 {
-    string _title;
+    private string _title;
     public WritingAssignment(
         string name,
         string topic,
