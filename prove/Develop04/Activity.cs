@@ -6,6 +6,8 @@ public class Activity
     private string _startingMessage;
     private string _finishingMessage;
     private List<string> _testAnimationList; 
+    private List<string> _breatheAnimationList; 
+
 
     public Activity()
     {
@@ -15,24 +17,31 @@ public class Activity
         _duration = 0;
         _startingMessage = "";
         _finishingMessage = "";
+        //creating the test animation list;
         _testAnimationList = new List<string>();
-        _testAnimationList.Add("_____");
-        _testAnimationList.Add("____/");
-        _testAnimationList.Add("___/\\");
-        _testAnimationList.Add("__/\\_");
-        _testAnimationList.Add("_/\\__");
-        _testAnimationList.Add("/\\___");
-        _testAnimationList.Add("\\____");
+        _testAnimationList.Add("/\\/\\/\\");
+        _testAnimationList.Add("\\/\\/\\/");
+
+            
+        //creating the breathe animation list;
+        _breatheAnimationList = new List<string>();
+        _breatheAnimationList.Add("____`____");
+        _breatheAnimationList.Add("___-`-___");
+        _breatheAnimationList.Add("_--```--_");
+        _breatheAnimationList.Add("--`````--");
+        _breatheAnimationList.Add("--`````--");
+        _breatheAnimationList.Add("-```````-");
+        _breatheAnimationList.Add("`````````");
 
     }
 
     protected void SetDuration()
     {
-        Console.Write("How long do you want to spend on this activity? ");
+        Console.Write("How many seconds do you want to spend on this activity? ");
         _duration = int.Parse(Console.ReadLine());
 
     }
-    protected void ShowAnimation1()
+    protected void ShowBasicAnimation1()
     // shows animation for 5 seconds;
     {
         DateTime _now = DateTime.Now;
@@ -52,14 +61,15 @@ public class Activity
             Console.Write("\b \b");
         }
     }
-    protected void ShowAnimation2(List<string> _animationList)
+    protected void ShowAnimation(List<string> _animationList)
     // takes a list of characters and creates them into an animation;
     {
         for (int i=0; i<_animationList.Count(); i++)
         {
             Console.Write(_animationList[i]);
             Thread.Sleep(200);
-            for (int j=0; j<5; j++)
+            int _length = _animationList[i].Length;
+            for (int j=0; j<_length; j++)
             {
                 Console.Write("\b");
             }
@@ -72,9 +82,17 @@ public class Activity
         Console.WriteLine($"{_description}");
         SetDuration();
         Console.WriteLine("Prepare to begin...");
-        ShowAnimation2(_testAnimationList);
-        ShowAnimation2(_testAnimationList);
-        ShowAnimation2(_testAnimationList);
+        List<string> l1 = _testAnimationList;
+        ShowAnimation(_breatheAnimationList);
+        ShowAnimation(_breatheAnimationList);
+        ShowAnimation(_breatheAnimationList);
+    }
 
+    public void EndActivity()
+    {
+        Console.WriteLine("Good job.");
+        ShowAnimation(_testAnimationList);
+        Console.WriteLine($"You have finished the {_name} activity for {_duration} seconds.");
+        ShowAnimation(_testAnimationList);
     }
 }
