@@ -25,4 +25,10 @@ public class Menu
         Console.Write("Please select your choice, then press enter: ");
         return int.Parse(Console.ReadLine());
     }
+
+    public string GetMenuOption(int i)
+    /*Takes in an int and returns the list index of that int.*/
+    {
+        return _menuOptions[i-1];
+    }
 }
