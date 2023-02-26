@@ -19,22 +19,7 @@ public class BreathingActivity: Activity
     }
 
 
-    private void Countdown(int seconds)
-    {
-        for (int i= seconds; i>=0; i--)
-            {
-                Console.Write(i);
-                Thread.Sleep(1000);
-                //count how many spaces to delete;
-                string num = $"{i}";
-                int len = num.Length;
-                for (int j = 0; j<len; j++)
-                {
-                    Console.Write("\b");
-                }
-                
-            }   
-    }
+    
 
     public void Breathe()
     {

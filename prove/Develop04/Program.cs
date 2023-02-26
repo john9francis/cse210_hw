@@ -43,11 +43,15 @@ class Program
             {
                 ReflectionActivity ra = new ReflectionActivity();
                 ra.StartActivity();
+                ra.Reflect();
+                ra.EndActivity();
             }
             else if (activity == "Listing Activity")
             {
                 ListingActivity la = new ListingActivity();
                 la.StartActivity();
+                la.List();
+                la.EndActivity();
             }
             else
             {

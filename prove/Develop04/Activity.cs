@@ -4,6 +4,8 @@ public class Activity
     protected string _description;
     protected int _duration;
     protected List<string> _animationList; 
+    protected List<string> _prompts;
+    protected List<string> _questions;
 
 
     public Activity()
@@ -46,20 +48,41 @@ public class Activity
             Console.Write("\b \b");
         }
     }
-    protected void ShowAnimation(List<string> _animationList)
+    protected void ShowAnimation(List<string> _animationList, int repeats=1)
     // takes a list of characters and creates them into an animation;
     {
-        for (int i=0; i<_animationList.Count(); i++)
+        for (int k=0; k<repeats; k++)
         {
-            Console.Write(_animationList[i]);
-            Thread.Sleep(200);
-            int _length = _animationList[i].Length;
-            for (int j=0; j<_length; j++)
+            for (int i=0; i<_animationList.Count(); i++)
             {
-                Console.Write("\b");
+                Console.Write(_animationList[i]);
+                Thread.Sleep(200);
+                int _length = _animationList[i].Length;
+                for (int j=0; j<_length; j++)
+                {
+                    Console.Write("\b");
+                }
             }
         }
     }
+
+    protected void Countdown(int seconds)
+    {
+        for (int i= seconds; i>=0; i--)
+            {
+                Console.Write(i);
+                Thread.Sleep(1000);
+                //count how many spaces to delete;
+                string num = $"{i}";
+                int len = num.Length;
+                for (int j = 0; j<len; j++)
+                {
+                    Console.Write("\b");
+                }
+                
+            }   
+    }
+
     public void StartActivity()
     {
         Console.Clear();
