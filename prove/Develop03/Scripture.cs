@@ -5,8 +5,8 @@ a scripture reference. */
     // setup stuff;-------------------------------------------------------;
     private List<Verse> _verseList;
     private string _reference;
-    private List<int> _verseNumbers; // must be private so it doesn't get messed up
-    public Scripture()
+    
+    private List<int> _verseNumbers; // must be private so it doesn't get messed uppublic Scripture()
     {
         _verseList = new List<Verse>();
         _reference = "";
