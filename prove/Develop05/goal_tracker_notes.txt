@@ -1,0 +1,60 @@
+Base class:
+Goal
+--------------
+- bool _completed
+- string _goalName
+- int _difficulty
+- int _pointValue
+- string _goalType
+-----
+- string CreateGoal
+- void (virtual) CompleteGoal
+
+children classes:
+Simple
+-------------
+_pointValue = 1000
+_goalType = "Simple";
+-----
+void (override) CompleteGoal
+
+Eternal
+-------------
+_pointValue = 100
+_goalType = "Eternal";
+-----
+void (override) CompleteGoal
+
+Checklist
+-------------
+_pointValue = 50;
+-----
+void (override) CompleteGoal
+
+other classes:
+GoalMenu
+/*
+Gives the user an interface to choose to mark a goal 
+complete or make a new goal.
+*/
+-------------
+- List<string> _menuOptions
+-----
+- DisplayChoices
+- DisplayGoals
+- Choose 
+- RecordEvent
+
+Progress
+/*
+Saves the raw goal information into a file
+in the form: "Goal name: Goal type" and 
+"total points"
+Also loads the data from a file and converts
+it back into goal objects.
+*/
+---------
+- List<Goal> _goalList
+- SavePoints
+- string SaveGoal
+- void LoadGoal
