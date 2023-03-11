@@ -58,4 +58,12 @@ public class ChecklistGoal : Goal
         }
         return base.GetPoints() + _timesCompleted * _pointValue + bonus;
     }
+
+    public override List<string> GetGoalVector()
+    {
+        List<string> vec = base.GetGoalVector();
+        vec.Add($"{_timesCompleted}");
+        vec.Add($"{_timesToComplete}");
+        return vec;
+    }
 }

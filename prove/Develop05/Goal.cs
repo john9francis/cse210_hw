@@ -20,7 +20,7 @@ public abstract class Goal
     {
         return _goalType;
     }
-    public bool GetStatus()
+    public bool IsCompleted()
     {
         return _completed;
     }
@@ -42,5 +42,15 @@ public abstract class Goal
     public virtual int GetPoints()
     {
         return _completed ? _pointValue : 0;
+    }
+
+    public virtual List<string> GetGoalVector()
+    {
+        List<string> vec = new List<string>();
+        vec.Add(_goalType);
+        vec.Add(_goalName);
+        vec.Add($"{_difficulty}");
+        vec.Add($"{_completed}");
+        return vec;
     }
 }

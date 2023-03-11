@@ -77,45 +77,50 @@ public class GoalMenu
     }
 
     // FUNCTIONS USED IN THE MENU_________________________________________
-    public void OrganizeGoals()
-    {
-        // organizes the goal list in order with 
-        // normal goals, eternal, checklist, then completed.
-
-        foreach(Goal g in _goals)
-        {
-            string _type = g.GetGoalType();
-            if (g.GetStatus())
-            {
-                _completed.Add(g);
-            }
-            else if (g.GetGoalType() == "Normal")
-            {
-                _normal.Add(g);
-            }
-            else if (g.GetGoalType() == "Eternal")
-            {
-                _eternal.Add(g);
-            }
-            else if (g.GetGoalType() == "Checklist")
-            {
-                _checklist.Add(g);
-            }
-            else
-            {
-                // I don't think this list will be used but
-                // we don't want to lose any goals
-                _other.Add(g);
-            }
-        }
-    }
+    
     public void DisplayGoals()
     {
+        
         for(int i=0;i<_goals.Count();i++)
         {
             string _goalString = _goals[i].GetGoalString();
             Console.WriteLine($"{i+1}. {_goalString}");
         }
+
+        /*
+        List<Goal> OrganizeGoals()
+        {
+            List<Goal> _organizedGoals = new List<Goal>();
+            List<string> _pattern = new List<string>();
+            _pattern.Add("Normal");
+            _pattern.Add("Eternal");
+            _pattern.Add("Checklist");
+            _pattern.Add("Completed");
+
+            for(int i=0; i<_pattern.Count(); i++)
+            {
+                foreach(Goal g in _goals)
+                {
+                    if (_pattern[i] == "Completed")
+                    {
+                        if(g.IsCompleted())
+                        {
+                            _organizedGoals.Add(g);
+                        }
+                    }
+                    else
+                    {
+                        if(!g.IsCompleted() && g.GetGoalType() == _pattern[i])
+                        {
+                            _organizedGoals.Add(g);
+                        }
+                    }
+                }
+            }
+
+            return _organizedGoals;
+        }
+        */
     }
 
     public void CreateGoal()

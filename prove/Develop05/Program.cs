@@ -5,30 +5,30 @@ class Program
     static void Main(string[] args)
     {
         GoalMenu m1 = new GoalMenu();
-        m1.RunMenu();
+        //m1.RunMenu();
 
-        bool test = false;
-        if (test)
-        {
+        Goal n = new ChecklistGoal();
+        List<string> g = new List<string>();
+        g = n.GetGoalVector();
 
-            NormalGoal n = new NormalGoal();
-            EternalGoal e = new EternalGoal();
-            ChecklistGoal c = new ChecklistGoal();
+        Goal n2 = new ChecklistGoal();
+        List<string> g2 = new List<string>();
+        g2 = n2.GetGoalVector();
 
-            List<Goal> l = new List<Goal>();
-            l.Add(n);
-            l.Add(e);
-            l.Add(c);
+        Goal n3 = new EternalGoal();
+        List<string> g3 = new List<string>();
+        g3 = n3.GetGoalVector();
 
-            foreach (Goal g in l)
-            {
-                Console.WriteLine(g.GetGoalString());
-            }
+        Progress p = new Progress();
+        p.SetFilename("test.txt");
 
-            m1._goals.Add(n);
-            m1._goals.Add(e);
-            m1._goals.Add(c);
-            //m1.DisplayGoals();
-    }
+        // save
+        p.SetGoalVector(g);
+        p.SetGoalVector(g3);
+        p.SaveGoalVectors();
+
+        //// load
+        //p.LoadGoalVectors();
+        //p.DisplayGoalVectors();
     }
 }
