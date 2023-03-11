@@ -5,8 +5,9 @@ class Program
     static void Main(string[] args)
     {
         GoalMenu m1 = new GoalMenu();
-        //m1.RunMenu();
+        m1.RunMenu();
 
+        /*
         Goal n = new ChecklistGoal();
         List<string> g = new List<string>();
         g = n.GetGoalVector();
@@ -30,5 +31,6 @@ class Program
         //// load
         //p.LoadGoalVectors();
         //p.DisplayGoalVectors();
+        */
     }
 }

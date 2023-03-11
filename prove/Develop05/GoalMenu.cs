@@ -28,8 +28,8 @@ public class GoalMenu
         _menuOptions.Add("Record a goal completion");
         _menuOptions.Add("View current goal list");
         _menuOptions.Add("See my score");
-        _menuOptions.Add("Load a goal list from a file");
         _menuOptions.Add("Save this list to a file");
+        _menuOptions.Add("Load a goal list from a file");
         _menuOptions.Add("Quit");
 
         _animationList = new List<string>();
@@ -202,6 +202,82 @@ public class GoalMenu
         Console.ReadLine();
         ShowBasicAnimation();
     }
+    public void SaveProgress()
+    {
+        Console.Clear();
+        Progress p = new Progress();
+
+        // get the goal vectors into the progress class
+        foreach(Goal goal in _goals)
+        {
+            p.SetGoalVector(goal.GetGoalVector());
+        }
+        
+        // save the goal vectors to a file:
+        Console.Write("Name your file: (you don't have to write .txt after) ");
+        string filename = Console.ReadLine() + ".txt";
+        p.SetFilename(filename);
+        p.SaveGoalVectors();
+
+        Console.WriteLine("Saving file...");
+        ShowBasicAnimation();
+        Console.WriteLine($"{filename} successfully saved.");
+        ShowBasicAnimation();
+    }
+
+    public void LoadProgress()
+    {
+        Console.Clear();
+        Progress p = new Progress();
+
+        // get filename
+        Console.Write("Please enter the filename to load from. " +
+        "(you don't have to write .txt after) ");
+        string filename = Console.ReadLine() + ".txt";
+
+        // load the file into progress
+        p.SetFilename(filename);
+        p.LoadGoalVectors();
+
+        // get the goal vectors into our goal list.
+        // each "goal vector" will be of the form:
+        // [goalType, goalName, difficulty, completed, timesCompleted, timesToComplete]
+        foreach(List<string> goalVector in p._goalVectors)
+        {
+            if(goalVector[0] == "Normal")
+            {
+                //Normal goal
+                Goal g = new NormalGoal();
+                g.ReverseGoalVector(goalVector);
+                _goals.Add(g);
+            }
+            else if(goalVector[0] == "Eternal")
+            {
+                //Eternal goal
+                Goal g = new EternalGoal();
+                g.ReverseGoalVector(goalVector);
+                _goals.Add(g);
+            }
+            else if(goalVector[0] == "Checklist")
+            {
+                //Checklist goal
+                Goal g = new ChecklistGoal();
+                g.ReverseGoalVector(goalVector);
+                _goals.Add(g);
+            }
+            else
+            {
+                //unrecognized
+            }
+        }
+
+        // tell the user it's done
+        Console.Write($"Loading goals from {filename}...");
+        ShowBasicAnimation();
+        Console.WriteLine();
+        Console.Write($"Goals successfully loaded from {filename}.");
+        ShowBasicAnimation();
+    }
 
     //________________________________________________________________________
 
@@ -222,11 +298,34 @@ public class GoalMenu
                     $"{_menuOptions[choice]}. ");
                     ShowBasicAnimation();
 
-                    if (_menuOptions[choice] == "Quit"){x = false;}
-                    else if (choice == 1){CreateGoal();}
-                    else if (choice == 2){RecordGoalCompletion();}
-                    else if (choice == 3){ViewGoalList();}
-                    else if (choice == 4){ViewScore();}
+                    if (_menuOptions[choice] == "Quit")
+                    {
+                        x = false;
+                    }
+                    else if (choice == 1)
+                    {
+                        CreateGoal();
+                    }
+                    else if (choice == 2)
+                    {
+                        RecordGoalCompletion();
+                    }
+                    else if (choice == 3)
+                    {
+                        ViewGoalList();
+                    }
+                    else if (choice == 4)
+                    {
+                        ViewScore();
+                    }
+                    else if (choice == 5)
+                    {
+                        SaveProgress();
+                    }
+                    else if (choice == 6)
+                    {
+                        LoadProgress();
+                    }
                 }
                 catch (ArgumentOutOfRangeException)
                 {

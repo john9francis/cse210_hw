@@ -2,12 +2,12 @@ using System.IO;
 
 public class Progress
 {
-    List<List<string>> _goalVectors;
+    public List<List<string>> _goalVectors;
     // each "goal vector" will be of the form:
     // [goalType, goalName, difficulty, completed, timesCompleted, timesToComplete]
 
-    int _points;
-    string _filename;
+    public int _points;
+    public string _filename;
     
     public Progress()
     {

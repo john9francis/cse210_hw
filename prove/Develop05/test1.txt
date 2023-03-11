@@ -1,0 +1,3 @@
+Normal,myNormal goal,2,True
+Eternal,egoal,3,False
+Normal,checked goal,3,True

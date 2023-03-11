@@ -44,8 +44,9 @@ public class ChecklistGoal : Goal
             Console.WriteLine("Please enter a number.");
         }
         }
-
-        // setting the point value:
+    }
+    public override void SetPointValue()
+    {
         _pointValue = _difficulty * 10;
     }
 
@@ -65,5 +66,12 @@ public class ChecklistGoal : Goal
         vec.Add($"{_timesCompleted}");
         vec.Add($"{_timesToComplete}");
         return vec;
+    }
+
+    public override void ReverseGoalVector(List<string> goalVec)
+    {
+        base.ReverseGoalVector(goalVec);
+        _timesCompleted = int.Parse(goalVec[4]);
+        _timesToComplete = int.Parse(goalVec[5]);
     }
 }

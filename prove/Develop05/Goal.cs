@@ -37,7 +37,10 @@ public abstract class Goal
         Console.Write("Enter difficulty. (1=easiest, 3=hardest): ");
         int diff = int.Parse(Console.ReadLine());
         _difficulty = diff;
+        SetPointValue();
     }
+
+    public abstract void SetPointValue();
 
     public virtual int GetPoints()
     {
@@ -52,5 +55,20 @@ public abstract class Goal
         vec.Add($"{_difficulty}");
         vec.Add($"{_completed}");
         return vec;
+    }
+    public virtual void ReverseGoalVector(List<string> goalVec)
+    {
+        _goalType = goalVec[0];
+        _goalName = goalVec[1];
+        _difficulty = int.Parse(goalVec[2]);
+        if (goalVec[3] == "True")
+        {
+            _completed = true;
+        }
+        else if (goalVec[3] == "False")
+        {
+            _completed = false;
+        }
+        SetPointValue();
     }
 }

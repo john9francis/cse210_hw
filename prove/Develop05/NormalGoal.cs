@@ -14,10 +14,8 @@ public class NormalGoal : Goal
         string status = _completed ? "X" : " ";
         return $"[{status}] " + base.GetGoalString();
     }
-    public override void SetGoal()
+    public override void SetPointValue()
     {
-        base.SetGoal();
-        // setting the point value:
         _pointValue = _difficulty * 100;
     }
 }

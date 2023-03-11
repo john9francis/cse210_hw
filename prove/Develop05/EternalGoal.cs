@@ -13,10 +13,8 @@ public class EternalGoal : Goal
     {
         _timesCompleted ++;
     }
-    public override void SetGoal()
+    public override void SetPointValue()
     {
-        base.SetGoal();
-        // setting the point value:
         _pointValue = _difficulty * 10;
     }
 
