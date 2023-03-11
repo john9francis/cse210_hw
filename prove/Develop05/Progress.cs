@@ -84,6 +84,9 @@ public class Progress
 
     public void LoadGoalVectors()
     {
+        // first, clear out current vector list;
+        _goalVectors.Clear();
+        
         string filename = _filename;
         string[] lines = System.IO.File.ReadAllLines(filename);
 
@@ -97,7 +100,6 @@ public class Progress
             {
                 vec.Add(part);
             }
-
             SetGoalVector(vec);
         }
     }

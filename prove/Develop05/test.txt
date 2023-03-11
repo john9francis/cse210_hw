@@ -1,2 +1,0 @@
-Checklist,New Checklist Goal,0,False,0,0
-Eternal,New Eternal Goal,0,False

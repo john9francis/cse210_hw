@@ -1,3 +1,4 @@
-Normal,myNormal goal,2,True
-Eternal,egoal,3,False
-Normal,checked goal,3,True
+Normal,normal test,1,False
+Normal,normal test 2,1,True
+Eternal,eternal test,2,False,1
+Checklist,check test,3,False,1,20

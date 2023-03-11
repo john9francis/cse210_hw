@@ -26,7 +26,7 @@ public class GoalMenu
         _menuOptions.Add("(zero index)");
         _menuOptions.Add("Create new goal");
         _menuOptions.Add("Record a goal completion");
-        _menuOptions.Add("View current goal list");
+        _menuOptions.Add("Clear goal list");
         _menuOptions.Add("See my score");
         _menuOptions.Add("Save this list to a file");
         _menuOptions.Add("Load a goal list from a file");
@@ -65,7 +65,6 @@ public class GoalMenu
 
     public string DisplayOptions()
     {
-        Console.Clear();
         Console.WriteLine("Welcome to the goal menu. " +
         "Please choose an option by typing in the number.");
         for(int i=1;i<_menuOptions.Count();i++)
@@ -227,6 +226,10 @@ public class GoalMenu
 
     public void LoadProgress()
     {
+        try{
+        // clear out current goal list
+        _goals.Clear();
+        
         Console.Clear();
         Progress p = new Progress();
 
@@ -277,6 +280,33 @@ public class GoalMenu
         Console.WriteLine();
         Console.Write($"Goals successfully loaded from {filename}.");
         ShowBasicAnimation();
+        }
+        catch(FileNotFoundException)
+        {
+            Console.Write("File not found.");
+            ShowBasicAnimation();
+        }
+    }
+
+    public void ClearGoalList()
+    {
+        Console.Clear();
+        Console.Write("Are you sure you want to clear your goal list? (y/n) ");
+        string choice = Console.ReadLine();
+        if (choice == "y" || choice == "Y")
+        {
+            _goals.Clear();
+            ShowBasicAnimation();
+            Console.WriteLine("Goals successfully cleared.");
+            ShowBasicAnimation();
+        }
+        else
+        {
+            ShowBasicAnimation();
+            Console.WriteLine("Cancelled...");
+            ShowBasicAnimation();
+        }
+
     }
 
     //________________________________________________________________________
@@ -286,6 +316,10 @@ public class GoalMenu
             bool x = true;
             while(x)
             {
+                Console.Clear();
+                Console.WriteLine("Goals:_________________");
+                DisplayGoals();
+                Console.WriteLine("_______________________");
                 string schoice = DisplayOptions();
                 try
                 {
@@ -312,7 +346,7 @@ public class GoalMenu
                     }
                     else if (choice == 3)
                     {
-                        ViewGoalList();
+                        ClearGoalList();
                     }
                     else if (choice == 4)
                     {

@@ -13,6 +13,11 @@ public class EternalGoal : Goal
     {
         _timesCompleted ++;
     }
+    public override string GetGoalString()
+    {
+        return base.GetGoalString() + 
+        $" - Completed {_timesCompleted} times";
+    }
     public override void SetPointValue()
     {
         _pointValue = _difficulty * 10;
@@ -21,6 +26,18 @@ public class EternalGoal : Goal
     public override int GetPoints()
     {
         return base.GetPoints() + _timesCompleted * _pointValue;
+    }
+    public override List<string> GetGoalVector()
+    {
+        List<string> vec = base.GetGoalVector();
+        vec.Add($"{_timesCompleted}");
+        return vec;
+    }
+
+    public override void ReverseGoalVector(List<string> goalVec)
+    {
+        base.ReverseGoalVector(goalVec);
+        _timesCompleted = int.Parse(goalVec[4]);
     }
 
 }
