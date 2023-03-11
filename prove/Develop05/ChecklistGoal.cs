@@ -11,7 +11,10 @@ public class ChecklistGoal : Goal
     }
     public override void CompleteGoal()
     {
-        _timesCompleted ++;
+        if (!_completed)
+        {
+            _timesCompleted ++;
+        }
         if (_timesCompleted == _timesToComplete)
         {
             _completed = true;
@@ -51,7 +54,7 @@ public class ChecklistGoal : Goal
         int bonus = 0;
         if (_completed)
         {
-            bonus = 500;
+            bonus = _difficulty*100;
         }
         return base.GetPoints() + _timesCompleted * _pointValue + bonus;
     }

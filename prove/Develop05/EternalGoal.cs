@@ -13,10 +13,6 @@ public class EternalGoal : Goal
     {
         _timesCompleted ++;
     }
-    public override string GetGoalString()
-    {
-        return base.GetGoalString() + " each completion";
-    }
     public override void SetGoal()
     {
         base.SetGoal();

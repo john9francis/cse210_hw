@@ -3,8 +3,23 @@ public class GoalMenu
     private List<string> _menuOptions;
     public List<Goal> _goals;
     private List<string> _animationList;
+
+    // different goal lists:
+    List<Goal> _normal;
+    List<Goal> _eternal;
+    List<Goal> _checklist;
+    List<Goal> _completed;
+    List<Goal> _other;
+
+
     public GoalMenu()
     {
+        _normal = new List<Goal>();
+        _eternal = new List<Goal>();
+        _checklist = new List<Goal>();
+        _completed = new List<Goal>();
+        _other = new List<Goal>();
+
         _goals = new List<Goal>();
 
         _menuOptions = new List<string>();
@@ -61,6 +76,39 @@ public class GoalMenu
         return Console.ReadLine();
     }
 
+    // FUNCTIONS USED IN THE MENU_________________________________________
+    public void OrganizeGoals()
+    {
+        // organizes the goal list in order with 
+        // normal goals, eternal, checklist, then completed.
+
+        foreach(Goal g in _goals)
+        {
+            string _type = g.GetGoalType();
+            if (g.GetStatus())
+            {
+                _completed.Add(g);
+            }
+            else if (g.GetGoalType() == "Normal")
+            {
+                _normal.Add(g);
+            }
+            else if (g.GetGoalType() == "Eternal")
+            {
+                _eternal.Add(g);
+            }
+            else if (g.GetGoalType() == "Checklist")
+            {
+                _checklist.Add(g);
+            }
+            else
+            {
+                // I don't think this list will be used but
+                // we don't want to lose any goals
+                _other.Add(g);
+            }
+        }
+    }
     public void DisplayGoals()
     {
         for(int i=0;i<_goals.Count();i++)
@@ -70,35 +118,55 @@ public class GoalMenu
         }
     }
 
-    // FUNCTIONS USED IN THE MENU_________________________________________
     public void CreateGoal()
     {
         Console.Clear();
-        NormalGoal g = new NormalGoal();
-        g.SetGoal();
-        _goals.Add(g);
-        Console.Write("Creating goal...");
+        Console.WriteLine("What type of goal would you like to create?");
+        Console.WriteLine("1. Normal Goal");
+        Console.WriteLine("2. Eternal Goal");
+        Console.WriteLine("3. Checklist Goal");
+        int goalType = int.Parse(Console.ReadLine());
+
+        string sgoalType = "";
+        Goal g;
+
+        if (goalType == 1)
+        {
+            g = new NormalGoal();
+            sgoalType = "Normal";
+            g.SetGoal();
+            _goals.Add(g);
+        }
+        else if (goalType == 2)
+        {
+            g = new EternalGoal();
+            sgoalType = "Eternal";
+            g.SetGoal();
+            _goals.Add(g);
+        }
+        else if (goalType == 3)
+        {
+            g = new ChecklistGoal();
+            sgoalType = "Checklist";
+            g.SetGoal();
+            _goals.Add(g);
+        }
+    
+        Console.Write($"Creating {sgoalType} goal...");
         ShowBasicAnimation(); 
+
     }
     public void RecordGoalCompletion()
     {
         Console.Clear();
-        if(_goals.Count() == 0)
-        {
-            Console.WriteLine("There are no goals yet. " + 
-            "Add a goal or load a goal list from a file.");
-            ShowBasicAnimation();
-        }
-        else
-        {
-            Console.WriteLine("Which goal would you like to complete?");
-            DisplayGoals();
-            int c = int.Parse(Console.ReadLine())-1;
-            _goals[c].CompleteGoal();
-            Console.WriteLine("Goal successfully completed.");
-            Console.WriteLine(_goals[c].GetGoalString());
-            ShowBasicAnimation(3); 
-        }
+        Console.WriteLine("Which goal would you like to complete?");
+        DisplayGoals();
+        int c = int.Parse(Console.ReadLine())-1;
+        _goals[c].CompleteGoal();
+        Console.WriteLine("Goal successfully completed.");
+        Console.WriteLine(_goals[c].GetGoalString());
+        ShowBasicAnimation(3); 
+        
     }
     public void ViewGoalList()
     {

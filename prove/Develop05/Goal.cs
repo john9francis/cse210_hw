@@ -16,6 +16,14 @@ public abstract class Goal
     }
 
     public abstract void CompleteGoal();
+    public string GetGoalType()
+    {
+        return _goalType;
+    }
+    public bool GetStatus()
+    {
+        return _completed;
+    }
     public virtual string GetGoalString()
     {
         return $"({_goalType}) {_goalName} - "+
