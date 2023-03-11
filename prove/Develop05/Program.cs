@@ -4,13 +4,25 @@ class Program
 {
     static void Main(string[] args)
     {
-        
-        Goal g1 = new Goal();
-        g1.CompleteGoal();
-
         GoalMenu m1 = new GoalMenu();
-        m1.AddGoal(g1);
+        //m1.RunMenu();
+        NormalGoal n = new NormalGoal();
+        EternalGoal e = new EternalGoal();
+        ChecklistGoal c = new ChecklistGoal();
 
-        m1.RunMenu();
+        List<Goal> l = new List<Goal>();
+        l.Add(n);
+        l.Add(e);
+        l.Add(c);
+
+        foreach (Goal g in l)
+        {
+            Console.WriteLine(g.GetGoalString());
+        }
+
+        m1._goals.Add(n);
+        m1._goals.Add(e);
+        m1._goals.Add(c);
+        //m1.DisplayGoals();
     }
 }
