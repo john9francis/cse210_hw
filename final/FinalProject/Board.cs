@@ -4,6 +4,7 @@ public class Board
     private List<string> _numbers;
     private List<string> _letters;
     private List<List<Tile>> _tileList;
+    public List<Piece> _pieceList;
     public Board()
     {
         // the numbers and letters are for the edge of the board
@@ -25,6 +26,8 @@ public class Board
             _tileList.Add(row);
         }
 
+        _pieceList = new List<Piece>();
+
     }
     public void DrawBoard()
     {
@@ -35,6 +38,18 @@ public class Board
             Console.Write(num);
         }
         Console.WriteLine();
+
+        // Put the pieces from the piecelist into their respective tiles
+        ClearBoard();
+        foreach (Piece p in _pieceList)
+        {
+            int letter = p._position[0];
+            int number = p._position[1];
+
+            // fill the correct tile
+            _tileList[letter][number].AddPiece(p);
+        }
+
 
         // draw a letter followed by a row of tiles.
         for (int i=0; i<_letters.Count(); i++)
@@ -61,21 +76,31 @@ public class Board
 
     public void PlacePiece(Piece p)
     {
-        // step one: check if piece is already in list:
-        // ...
-
-        int letter = p._position[0];
-        int number = p._position[1];
-
-        // fill the correct tile
-        _tileList[letter][number].AddPiece(p);
+        _pieceList.Add(p);
     }
 
     public void PlaceTeam(Team t)
     {
         foreach (Piece p in t._teamPieces)
         {
-            PlacePiece(p);
+            _pieceList.Add(p);
+        }
+    }
+
+    public void CheckTile(List<int> coordinates)
+    {
+        //Takes in a coordinate and sees which piece is on there
+        int row = coordinates[0];
+        int column = coordinates[1];
+        if (_tileList[row][column]._onTile.Count() == 0)
+        {
+            // there's nothing on the tile
+            Console.WriteLine("empty tile");
+        }
+        else
+        {
+            // there's something on the tile
+            Console.WriteLine("theres something there");
         }
     }
 
