@@ -8,3 +8,25 @@
 [G][+][+][+][+][+][+][+][+]
 [H][#][/][$][!][?][$][/][#]
 
+Each class needs specific boundaries.
+
+Piece:
+_symbol
+_position
+_whereCanMove
+
+Game: 
+- interactions between pieces
+- interactions between pieces and edge of Board
+
+Board:
+_boardSize
+- displays everything
+
+Tile:
+- holds exactly one piece. That's all it does.
+
+Team:
+- pieces in play
+- dead pieces
+- points

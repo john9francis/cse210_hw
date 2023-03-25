@@ -1,24 +1,22 @@
 public class Board
 {
     // Holds all the tiles;
-    private List<string> _numbers;
-    private List<string> _letters;
     private List<List<Tile>> _tileList;
     public List<Piece> _pieceList;
+    public int _size;
+
+
     public Board()
     {
-        // the numbers and letters are for the edge of the board
-        _numbers = new List<string>
-        {"[1]","[2]","[3]","[4]","[5]","[6]","[7]","[8]"};
-        _letters = new List<string>
-        {"[A]","[B]","[C]","[D]","[E]","[F]","[G]","[H]"};
+        
         _tileList = new List<List<Tile>>();
+        _size = 8;
 
         // fill up the tileList:
-        for (int i=0; i<_letters.Count(); i++)
+        for (int i=0; i<_size; i++)
         {
             List<Tile> row = new List<Tile>();
-            for (int j=0; j<_numbers.Count(); j++)
+            for (int j=0; j<_size; j++)
             {
                 Tile tile = new Tile();
                 row.Add(tile);
@@ -29,8 +27,15 @@ public class Board
         _pieceList = new List<Piece>();
 
     }
+
     public void DrawBoard()
     {
+        // the numbers and letters are for the edges of the board
+        List<string> _numbers = new List<string>
+        {"[1]","[2]","[3]","[4]","[5]","[6]","[7]","[8]"};
+        List<string> _letters = new List<string>
+        {"[A]","[B]","[C]","[D]","[E]","[F]","[G]","[H]"};
+
         // Draw the numbers;
         Console.Write("   "); // this is the top left corner space
         foreach (string num in _numbers)
@@ -52,12 +57,21 @@ public class Board
 
 
         // draw a letter followed by a row of tiles.
-        for (int i=0; i<_letters.Count(); i++)
+        for (int i=0; i<_size; i++)
         {
             Console.Write(_letters[i]);
-            for (int j=0; j<_numbers.Count(); j++)
+            for (int j=0; j<_size; j++)
             {
-                Console.Write(_tileList[i][j].TileString());
+                //Console.Write(_tileList[i][j].TileString());
+                Tile tile = _tileList[i][j];
+                if (tile.TileFull())
+                {
+                    Console.Write($"[{tile.GetPiece().GetSymbol()}]");
+                }
+                else
+                {
+                    Console.Write($"[ ]");
+                }
             }
             Console.WriteLine();
         }
@@ -92,15 +106,14 @@ public class Board
         //Takes in a coordinate and sees which piece is on there
         int row = coordinates[0];
         int column = coordinates[1];
-        if (_tileList[row][column]._onTile.Count() == 0)
+        Tile tile = _tileList[row][column];
+        if (tile.TileFull())
         {
-            // there's nothing on the tile
-            Console.WriteLine("empty tile");
+            Console.WriteLine("There's a piece on this tile.");
         }
         else
         {
-            // there's something on the tile
-            Console.WriteLine("theres something there");
+            Console.WriteLine("There's nothing here.");
         }
     }
 

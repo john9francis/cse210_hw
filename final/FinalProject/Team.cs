@@ -71,5 +71,7 @@ public class Team
         _teamPieces.Add(_n2);
 
     }
+
+
     
 }
