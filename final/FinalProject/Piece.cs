@@ -7,12 +7,14 @@ public abstract class Piece
     public List<int> _position;
     public bool _canJump;
     // bool _dead = false;
+    public List<List<int>> _whereCanMove;
 
     public Piece(int xpos, int ypos, string symbol="")
     {
         _symbol = symbol;
         _position = new List<int>{xpos,ypos};
         _canJump = false;
+        _whereCanMove = new List<List<int>>();
     }
 
 
@@ -28,7 +30,10 @@ public abstract class Piece
         _position[1] = destination[1];
     }
 
-    public abstract List<List<int>> WhereCanMove();
+    public List<List<int>> GetWhereCanMove()
+    {
+        return _whereCanMove;
+    }
 
     public string GetSymbol()
     {
@@ -45,14 +50,9 @@ public class King : Piece
 {
     public King(int xpos, int ypos, string symbol="k") : base(xpos,ypos,symbol)
     {
-    }
-
-    public override List<List<int>> WhereCanMove()
-    {
+        // set where the king can move and put it in the _whereCanMove variable.
         // a king can only move in the following ways:
         // (1,0),(1,1),(0,1),(-1,1),(-1,0),(-1,-1),(0,-1),(1,-1)
-        
-        List<List<int>> coordinates = new List<List<int>>();
         for (int i=-1;i<2;i++)
         {
             for(int j=-1;j<2;j++)
@@ -64,58 +64,9 @@ public class King : Piece
                 }
                 else
                 {
-                    coordinates.Add(new List<int>{i,j});
+                    _whereCanMove.Add(new List<int>{i,j});
                 }
             }
-        }
-
-        
-        // now translate the coordinates to where the piece is.
-        foreach(List<int> l in coordinates)
-        {
-            l[0] += _position[0];
-            l[1] += _position[1];
-        }
-
-        // make sure the piece can't move off the board
-        // NOTE: move this function in the game class.
-        List<List<int>> outputList = new List<List<int>>();
-    
-        foreach(List<int> subList in coordinates)
-        {
-            bool containsNegative = false;
-
-            foreach(int number in subList)
-            {
-                if(number < 0)
-                {
-                    containsNegative = true;
-                    break;
-                }
-            }
-
-            if(!containsNegative)
-            {
-                outputList.Add(subList);
-            }
-        }
-        
-
-        return outputList;
-    }
-
-    public bool CheckCheckMate()
-    {
-        // checks if the king is in checkmate
-        // NOTE: this function also goes in the Game class
-        List<List<int>> whereCanMove = WhereCanMove();
-        if (whereCanMove.Count() == 0)
-        {
-            return true;
-        }
-        else 
-        {
-            return false;
         }
     }
 }
@@ -124,25 +75,17 @@ public class Queen : Piece
 {
     public Queen(int xpos, int ypos, string symbol="q") : base(xpos,ypos,symbol)
     {
-    }
-
-    public override List<List<int>> WhereCanMove()
-    {
-        throw new NotImplementedException();
         // a queen can move anywhere horizontally, vertically, or diagonally.
         // the most a queen would need to move is 7 spaces.
         // a queen can't jump over it's own team. 
     }
+
 }
 
 public class Castle : Piece
 {
     public Castle(int xpos, int ypos, string symbol="c") : base(xpos,ypos,symbol)
     {
-    }
-    public override List<List<int>> WhereCanMove()
-    {
-        throw new NotImplementedException();
     }
 }
 
@@ -152,12 +95,8 @@ public class Knight : Piece
     {
         _canJump = true;
     }
-
-    public override List<List<int>> WhereCanMove()
-    {
-        throw new NotImplementedException();
-    }
 }
+
 
 public class Bishop : Piece
 {
@@ -165,10 +104,6 @@ public class Bishop : Piece
     {
     }
 
-    public override List<List<int>> WhereCanMove()
-    {
-        throw new NotImplementedException();
-    }
 }
 
 public class Pon : Piece
@@ -177,14 +112,10 @@ public class Pon : Piece
     bool firstTurn;
     public Pon(int xpos, int ypos, string symbol="p") : base(xpos,ypos,symbol)
     {
+        // pons have extra rules to their moves. 
+        // these will be handled by enemyNearby and firstTurn.
         enemyNearby = false;
         firstTurn = true;
     }
 
-    public override List<List<int>> WhereCanMove()
-    {
-        throw new NotImplementedException();
-        // pons have extra rules to their moves. 
-        // these will be handled by enemyNearby and firstTurn.
-    }
 }

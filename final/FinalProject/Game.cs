@@ -84,12 +84,6 @@ public class Game
         // get the piece
         movingPiece = _board.GetPiece(coord);
 
-        // if the piece can't move, give the user the option to try another piece.
-        if (WherePieceCanMove(movingPiece, team).Count == 0)
-        {
-            Console.WriteLine("This piece can't move. Try another piece. ");
-        }
-
         // User inputs where they want to move TO. checks if it's a valid move. 
         bool validMove = false;
         List<int> coord2 = new List<int>();
@@ -103,6 +97,38 @@ public class Game
 
             // get the list of places the piece can move (for now this is translated to where the piece is)
             moveOptions = movingPiece.WhereCanMove();
+
+            // now translate the coordinates to where the piece is.
+            foreach(List<int> l in moveOptions)
+            {
+                l[0] += movingPiece._position[0];
+                l[1] += movingPiece._position[1];
+            }
+
+            // make sure the piece can't move off the board
+            // NOTE: move this function in the game class.
+            List<List<int>> outputList = new List<List<int>>();
+
+            foreach(List<int> subList in moveOptions)
+            {
+                bool containsNegative = false;
+
+                foreach(int number in subList)
+                {
+                    if(number < 0)
+                    {
+                        containsNegative = true;
+                        break;
+                    }
+                }
+
+                if(!containsNegative)
+                {
+                    outputList.Add(subList);
+                }
+            }
+            moveOptions = outputList;
+
             foreach(List<int> l in moveOptions)
             {
                 Console.Write($"({l[0]},{l[1]})");
