@@ -69,6 +69,7 @@ public class King : Piece
             }
         }
 
+        
         // now translate the coordinates to where the piece is.
         foreach(List<int> l in coordinates)
         {
@@ -98,6 +99,8 @@ public class King : Piece
                 outputList.Add(subList);
             }
         }
+        
+
         return outputList;
     }
 
@@ -126,6 +129,9 @@ public class Queen : Piece
     public override List<List<int>> WhereCanMove()
     {
         throw new NotImplementedException();
+        // a queen can move anywhere horizontally, vertically, or diagonally.
+        // the most a queen would need to move is 7 spaces.
+        // a queen can't jump over it's own team. 
     }
 }
 
@@ -167,12 +173,18 @@ public class Bishop : Piece
 
 public class Pon : Piece
 {
+    bool enemyNearby;
+    bool firstTurn;
     public Pon(int xpos, int ypos, string symbol="p") : base(xpos,ypos,symbol)
     {
+        enemyNearby = false;
+        firstTurn = true;
     }
 
     public override List<List<int>> WhereCanMove()
     {
         throw new NotImplementedException();
+        // pons have extra rules to their moves. 
+        // these will be handled by enemyNearby and firstTurn.
     }
 }

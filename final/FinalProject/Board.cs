@@ -101,20 +101,29 @@ public class Board
         }
     }
 
-    public void CheckTile(List<int> coordinates)
+    public bool CheckTile(List<int> coordinate)
     {
-        //Takes in a coordinate and sees which piece is on there
-        int row = coordinates[0];
-        int column = coordinates[1];
+        //Takes in a coordinate and sees if a piece is on there
+        int row = coordinate[0];
+        int column = coordinate[1];
         Tile tile = _tileList[row][column];
         if (tile.TileFull())
         {
-            Console.WriteLine("There's a piece on this tile.");
+            return true;
         }
         else
         {
-            Console.WriteLine("There's nothing here.");
+            return false;
         }
+    }
+
+    public Piece GetPiece(List<int> coordinate)
+    {
+        //Takes in a coordinate and returns the piece on there.
+        int row = coordinate[0];
+        int column = coordinate[1];
+        Tile tile = _tileList[row][column];
+        return tile.GetPiece();
     }
 
   
