@@ -30,10 +30,7 @@ public abstract class Piece
         _position[1] = destination[1];
     }
 
-    public List<List<int>> GetWhereCanMove()
-    {
-        return _whereCanMove;
-    }
+    public abstract List<List<int>> GetWhereCanMove();
 
     public string GetSymbol()
     {
@@ -50,6 +47,11 @@ public class King : Piece
 {
     public King(int xpos, int ypos, string symbol="k") : base(xpos,ypos,symbol)
     {
+        
+    }
+    public override List<List<int>> GetWhereCanMove()
+    {
+        List<List<int>> whereCanMove = new List<List<int>>();
         // set where the king can move and put it in the _whereCanMove variable.
         // a king can only move in the following ways:
         // (1,0),(1,1),(0,1),(-1,1),(-1,0),(-1,-1),(0,-1),(1,-1)
@@ -64,10 +66,11 @@ public class King : Piece
                 }
                 else
                 {
-                    _whereCanMove.Add(new List<int>{i,j});
+                    whereCanMove.Add(new List<int>{i,j});
                 }
             }
         }
+        return whereCanMove;
     }
 }
 
@@ -75,9 +78,25 @@ public class Queen : Piece
 {
     public Queen(int xpos, int ypos, string symbol="q") : base(xpos,ypos,symbol)
     {
+        
+    }
+
+    public override List<List<int>> GetWhereCanMove()
+    {
         // a queen can move anywhere horizontally, vertically, or diagonally.
         // the most a queen would need to move is 7 spaces.
-        // a queen can't jump over it's own team. 
+        List<List<int>> whereCanMove = new List<List<int>>();
+        // vertical movements:
+        for (int i=-7; i<8; i++)
+        {
+            // don't add where the piece is located.
+            if (i!=0)
+            {
+                whereCanMove.Add(new List<int>{i,0});
+            }
+        }
+
+        return whereCanMove;
     }
 
 }
@@ -87,6 +106,11 @@ public class Castle : Piece
     public Castle(int xpos, int ypos, string symbol="c") : base(xpos,ypos,symbol)
     {
     }
+
+    public override List<List<int>> GetWhereCanMove()
+    {
+        throw new NotImplementedException();
+    }
 }
 
 public class Knight : Piece
@@ -95,6 +119,11 @@ public class Knight : Piece
     {
         _canJump = true;
     }
+
+    public override List<List<int>> GetWhereCanMove()
+    {
+        throw new NotImplementedException();
+    }
 }
 
 
@@ -102,6 +131,11 @@ public class Bishop : Piece
 {
     public Bishop(int xpos, int ypos, string symbol="b") : base(xpos,ypos,symbol)
     {
+    }
+
+    public override List<List<int>> GetWhereCanMove()
+    {
+        throw new NotImplementedException();
     }
 
 }
@@ -116,6 +150,11 @@ public class Pon : Piece
         // these will be handled by enemyNearby and firstTurn.
         enemyNearby = false;
         firstTurn = true;
+    }
+
+    public override List<List<int>> GetWhereCanMove()
+    {
+        throw new NotImplementedException();
     }
 
 }

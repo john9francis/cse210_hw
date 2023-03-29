@@ -55,7 +55,6 @@ public class Board
             _tileList[letter][number].AddPiece(p);
         }
 
-
         // draw a letter followed by a row of tiles.
         for (int i=0; i<_size; i++)
         {

@@ -51,28 +51,16 @@ public class Game
         bool canMove = false;
         List<int> coord = new List<int>();
 
-        while (!validPiece && !canMove)
+        while (!validPiece)
         {
             Console.Write($"{teamColor} team, Which piece would you like to move? (e.g. A1): ");
             string input = Console.ReadLine();
             coord = InputToCoordinate(input);
             if (TileInRange(coord) && PieceOnTile(coord,team))
             {
-                // Check if the piece even can move...
                 // get the piece
                 movingPiece = _board.GetPiece(coord);
-
-                // if the piece can't move, give the user the option to try another piece.
-                if (WherePieceCanMove(movingPiece, team).Count != 0)
-                {
-                    canMove = true;
-                    validPiece = true;
-                }
-                else
-                {
-                    Console.WriteLine("This piece can't move. Try another piece. ");
-                }
-
+                validPiece = true;
             }
             else
             {
@@ -95,8 +83,8 @@ public class Game
             string input = Console.ReadLine();
             coord2 = InputToCoordinate(input);
 
-            // get the list of places the piece can move (for now this is translated to where the piece is)
-            moveOptions = movingPiece.WhereCanMove();
+            // get the list of places the piece can move 
+            moveOptions = movingPiece.GetWhereCanMove();
 
             // now translate the coordinates to where the piece is.
             foreach(List<int> l in moveOptions)
@@ -104,45 +92,9 @@ public class Game
                 l[0] += movingPiece._position[0];
                 l[1] += movingPiece._position[1];
             }
-
-            // make sure the piece can't move off the board
-            // NOTE: move this function in the game class.
-            List<List<int>> outputList = new List<List<int>>();
-
-            foreach(List<int> subList in moveOptions)
-            {
-                bool containsNegative = false;
-
-                foreach(int number in subList)
-                {
-                    if(number < 0)
-                    {
-                        containsNegative = true;
-                        break;
-                    }
-                }
-
-                if(!containsNegative)
-                {
-                    outputList.Add(subList);
-                }
-            }
-            moveOptions = outputList;
-
-            foreach(List<int> l in moveOptions)
-            {
-                Console.Write($"({l[0]},{l[1]})");
-            }
-            Console.WriteLine();
-
-            // delete all the pieces from moveOptions that are occupied by same-team pieces
-            List<List<int>> sameTeamOccupied = GetOccupiedTiles(team);
-            moveOptions = DeleteIdenticalEntries(moveOptions,sameTeamOccupied);
-            foreach(List<int> l in moveOptions)
-            {
-                Console.Write($"({l[0]},{l[1]})");
-            }
-
+            // now moveOptions contains the basic places the piece can move.
+            // narrow down moveOptions even more by running it through the function:
+            moveOptions = WherePieceCanMove(moveOptions, team);
 
             foreach(List<int> l in moveOptions)
             {
@@ -160,28 +112,85 @@ public class Game
                 Console.Write("Invalid move. Please choose a different place to move. (press enter): ");
                 Console.ReadLine();
             }
-            // for each place...
-            // see if the coordinate is off the board
-            // see if there's a same team piece in the way
-            // see if you will kill another piece
         }
 
     }
 
-    public List<List<int>> WherePieceCanMove(Piece piece, Team team)
+    public void TestList(List<List<int>> list)
     {
-        //returns a list of coordinates where the piece can move WITHOUT same-team pieces blocking it.
+        foreach(List<int> l in list)
+            {
+                Console.Write($"({l[0]},{l[1]})");
+            }
+            Console.WriteLine();
+    }
 
-        // get the list of places the piece can move (for now this is translated to where the piece is)
-        List<List<int>> wherePieceCanMove = piece.WhereCanMove();
+    public List<List<int>> WherePieceCanMove(List<List<int>> whereCanMove, Team team)
+    {
+        // returns a list of coordinates where the piece can move WITHOUT same-team pieces blocking it.
+        
+        // Step 1: get rid of of all options off the board.
+        List<List<int>> outputList = new List<List<int>>();
+        foreach(List<int> subList in whereCanMove)
+        {
+            bool outOfRange = false;
+            foreach(int number in subList)
+            {
+                if(number < 0)
+                {
+                    outOfRange = true;
+                    break;
+                }
+                else if (number > 7)
+                {
+                    outOfRange = true;
+                    break;
+                }
+            }
 
-        // delete all moveOptions that are occupied by same-team pieces
-        List<List<int>> sameTeamOccupied = GetOccupiedTiles(team);
-        wherePieceCanMove = DeleteIdenticalEntries(wherePieceCanMove,sameTeamOccupied);
+            if(!outOfRange)
+            {
+                outputList.Add(subList);
+            }
+        }
 
-        // if piece can't jump, delete any moveOptions further away than the piece block...
+        whereCanMove = outputList;
 
-        return wherePieceCanMove;
+
+        // Step 2: delete all moveOptions that are occupied by same-team pieces
+        // SOMEWHERE IT"S MESSING UP...
+        List<List<int>> teamPieces = GetOccupiedTiles(team);
+        List<List<int>> updatedList = new List<List<int>>();
+        List<List<int>> blockers = new List<List<int>>();
+        foreach(List<int> option in whereCanMove)
+        {
+            bool block = false;
+
+            foreach(List<int> piece in teamPieces)
+            {
+                if (option.SequenceEqual(piece))
+                {
+                    block = true;
+                    // Save the index of the piece and the teampieces that are blocking it's movement.
+                    blockers.Add(piece);
+
+                }
+            }
+
+            if (!block)
+            {
+                updatedList.Add(option);
+            }
+        }
+
+        whereCanMove = updatedList;
+        TestList(whereCanMove);
+
+        // Step 3: delete all moveOptions that are blocked by the pieces that were there...(HARDEST PART)
+
+
+        
+        return whereCanMove;
 
     }
 
@@ -215,7 +224,7 @@ public class Game
     {
         // returns a list of coordinates occupied by tiles in the team.
         List<List<int>> occupiedTiles = new List<List<int>>();
-        foreach(Piece p in _board._pieceList)
+        foreach(Piece p in team._teamPieces)
         {
             occupiedTiles.Add(p._position);
         }
