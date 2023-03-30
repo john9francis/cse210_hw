@@ -116,6 +116,14 @@ public class Board
         }
     }
 
+    public void ClearTile(List<int> coordinate)
+    {
+        int row = coordinate[0];
+        int column = coordinate[1];
+        Tile tile = _tileList[row][column];
+        tile._onTile.Clear();
+    }
+
     public Piece GetPiece(List<int> coordinate)
     {
         //Takes in a coordinate and returns the piece on there.

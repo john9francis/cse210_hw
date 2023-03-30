@@ -119,6 +119,14 @@ public class Game
                 {
                     // the coordinate is a place the piece can move!
                     validMove = true;
+
+                    // if there is a piece there, kill it. 
+                    // NOTE: THIS IS BROKEN................
+                    if (_board.CheckTile(coord2))
+                    {
+                        _board.GetPiece(coord2).KillPiece();
+                    }
+
                     movingPiece.Move(coord2);
                     movingPiece.CompleteFirstMove(); // this is really just for the pon.
                 }
@@ -130,7 +138,6 @@ public class Game
             }
         }
 
-        // FINALLY, handle killing pieces.
 
         return true;
 
@@ -212,6 +219,44 @@ public class Game
         {
             whereCanMove = GetStraightBlockedList(whereCanMove, pieceLocation, blockCoord);
             whereCanMove = GetDiagonalBlockedList(whereCanMove, pieceLocation, blockCoord);
+        }
+
+        // Step 4: keep all CLOSEST moveOptions that contain opposing team pieces, but
+        // those pieces count as blockers as well...
+
+        Team opposingTeam;
+        if (team == _team1)
+        {
+            opposingTeam = _team2;
+        }
+        else
+        {
+            opposingTeam = _team1;
+        }
+
+        List<List<int>> oTeamCoords = GetOccupiedTiles(opposingTeam);
+        List<List<int>> oUpdatedList = new List<List<int>>();
+        List<List<int>> oBlockers = new List<List<int>>();
+        foreach(List<int> option in whereCanMove)
+        {
+
+            foreach(List<int> pieceCoord in oTeamCoords)
+            {
+                if (option.SequenceEqual(pieceCoord))
+                {
+                    // Save the index of the piece and the teampieces that are blocking it's movement.
+                    oBlockers.Add(pieceCoord);
+
+                }
+            }
+
+        }
+        // now that we have the blockers list, perform the Block list functions
+        // hopefully this means we CAN move to an enemy piece, but not PAST it.
+        foreach(List<int> b in oBlockers)
+        {
+            whereCanMove = GetStraightBlockedList(whereCanMove, pieceLocation, b);
+            whereCanMove = GetDiagonalBlockedList(whereCanMove, pieceLocation, b);
         }
         
         return whereCanMove;

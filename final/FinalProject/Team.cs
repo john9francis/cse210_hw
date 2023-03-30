@@ -22,7 +22,7 @@ public class Team
         {
             // set up white team
             _king = new King(7,3);
-            _queen = new Queen(7,4); // TEST!
+            _queen = new Queen(5,4); // TEST!
 
             _c1 = new Castle(7,0); // TEST!
             _c2 = new Castle(7,7);
@@ -70,6 +70,17 @@ public class Team
         _teamPieces.Add(_n1);
         _teamPieces.Add(_n2);
 
+    }
+
+    public void UpdateTeam()
+    {
+        for (int i=0; i<_teamPieces.Count; i++)
+        {
+            if (!_teamPieces[i]._alive)
+            {
+                _teamPieces.RemoveAt(i);
+            }
+        }
     }
 
 

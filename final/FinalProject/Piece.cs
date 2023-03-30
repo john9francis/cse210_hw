@@ -7,12 +7,14 @@ public abstract class Piece
     public List<int> _position;
     public List<List<int>> _whereCanMove;
     public string _pieceType;
+    public bool _alive;
 
     public Piece(int xpos, int ypos, string symbol="")
     {
         _symbol = symbol;
         _position = new List<int>{xpos,ypos};
         _whereCanMove = new List<List<int>>();
+        _alive = true;
     }
 
 
@@ -38,6 +40,10 @@ public abstract class Piece
     public virtual void CompleteFirstMove()
     {
         // only matters for pon
+    }
+    public void KillPiece()
+    {
+        _alive = false;
     }
 
 }
