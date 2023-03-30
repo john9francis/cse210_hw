@@ -22,9 +22,9 @@ public class Team
         {
             // set up white team
             _king = new King(7,3);
-            _queen = new Queen(7,4);
+            _queen = new Queen(7,4); // TEST!
 
-            _c1 = new Castle(7,0);
+            _c1 = new Castle(7,0); // TEST!
             _c2 = new Castle(7,7);
 
             _b1 = new Bishop(7,1);
@@ -56,7 +56,7 @@ public class Team
 
             for (int i=0; i<8; i++)
             {
-                Pon p = new Pon(1,i,"+");
+                Pon p = new Pon(1,i,symbol:"+",color:"Black");
                 _teamPieces.Add(p);
             }
         }
