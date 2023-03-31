@@ -199,13 +199,13 @@ public class Bishop : Piece
 
 public class Pon : Piece
 {
-    bool _firstMove;
     string _color;
+    bool _firstMove;
     public Pon(int xpos, int ypos, string symbol="p", string color="White") : base(xpos,ypos,symbol)
     {
-        _firstMove = true;
         _pieceType = "Pon";
         _color = color;
+        _firstMove = true;
     }
 
     public override List<List<int>> GetWhereCanMove()

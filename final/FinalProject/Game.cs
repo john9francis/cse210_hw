@@ -118,6 +118,12 @@ public class Game
         // narrow down moveOptions even more by running it through the function:
         moveOptions = WherePieceCanMove(moveOptions, team, movingPiece._position);
 
+        // extra options for pon:
+        if (movingPiece._pieceType == "Pon")
+        {
+            moveOptions = ApplyPonRules(team, movingPiece._position, moveOptions, opposingTeam);
+        }
+
         // if the piece literally can't move, return false.
         if (moveOptions.Count == 0)
         {
@@ -174,6 +180,75 @@ public class Game
                 Console.Write($"({l[0]},{l[1]})");
             }
             Console.WriteLine();
+    }
+
+    public List<List<int>> ApplyPonRules(Team ponTeam, List<int> ponPosition, List<List<int>> whereCanMove, Team opposingTeam)
+    {
+        // step 1: if an opposing team piece is directly in front of the pon, delete that coord from whereCanMove.
+        List<List<int>> opposingPieceCoords = GetOccupiedTiles(opposingTeam);
+        List<List<int>> updatedList = new List<List<int>>();
+        foreach(List<int> option in whereCanMove)
+        {
+            bool block = false;
+
+            foreach(List<int> pieceCoord in opposingPieceCoords)
+            {
+                if (option.SequenceEqual(pieceCoord))
+                {
+                    block = true;
+                }
+            }
+
+            if (!block)
+            {
+                updatedList.Add(option);
+            }
+        }
+
+        // step 2: if there is a piece to the left or right of the pon, add it to the updatedList.
+        if (ponTeam._teamColor == "White")
+        {
+            // we're dealing with up and left and right
+            List<int> left = new List<int>{ponPosition[0]-1,ponPosition[1]-1};
+            List<int> right = new List<int>{ponPosition[0]-1,ponPosition[1]+1};
+
+            foreach(List<int> pieceCoord in opposingPieceCoords)
+            {
+                if (left.SequenceEqual(pieceCoord))
+                {
+                    updatedList.Add(left);
+                }
+                else if (right.SequenceEqual(pieceCoord))
+                {
+                    updatedList.Add(right);
+                }
+            }
+        }
+        else
+        {
+            // down and left and right. 
+            List<int> left = new List<int>{ponPosition[0]+1,ponPosition[1]-1};
+            List<int> right = new List<int>{ponPosition[0]+1,ponPosition[1]+1};
+
+            foreach(List<int> pieceCoord in opposingPieceCoords)
+            {
+                if (left.SequenceEqual(pieceCoord))
+                {
+                    updatedList.Add(left);
+                }
+                else if (right.SequenceEqual(pieceCoord))
+                {
+                    updatedList.Add(right);
+                }
+            }
+            
+        }
+
+        whereCanMove = updatedList;
+
+
+
+        return whereCanMove;
     }
 
 
