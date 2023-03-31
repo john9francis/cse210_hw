@@ -14,17 +14,17 @@ public class Team
     
     // we will initialize the pons upon initializing the class
 
-    public Team(string color="white")
+    public Team(string color="White")
     {
         _teamColor = color;
         _teamPieces = new List<Piece>();
-        if (_teamColor=="white")
+        if (_teamColor=="White")
         {
             // set up white team
             _king = new King(7,3);
-            _queen = new Queen(5,4); // TEST!
+            _queen = new Queen(7,4);
 
-            _c1 = new Castle(7,0); // TEST!
+            _c1 = new Castle(7,0);
             _c2 = new Castle(7,7);
 
             _b1 = new Bishop(7,1);
@@ -74,6 +74,7 @@ public class Team
 
     public void UpdateTeam()
     {
+        // removes any unAlive pieces from the team.
         for (int i=0; i<_teamPieces.Count; i++)
         {
             if (!_teamPieces[i]._alive)
@@ -81,6 +82,20 @@ public class Team
                 _teamPieces.RemoveAt(i);
             }
         }
+    }
+
+    public Piece GetPiece(List<int> coordinate)
+    {
+        //Takes in a coordinate and returns the piece on there.
+        int pieceIndex = 0;
+        for (int i=0; i<_teamPieces.Count; i++)
+        {
+            if (_teamPieces[i]._position.SequenceEqual(coordinate))
+            {
+                pieceIndex = i;
+            }
+        }
+        return _teamPieces[pieceIndex];
     }
 
 

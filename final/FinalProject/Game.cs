@@ -6,37 +6,56 @@ public class Game
     public Game()
     {
         _team1 = new Team();
-        _team2 = new Team("black");
+        _team2 = new Team("Black");
         _board = new Board();
         _board.PlaceTeam(_team1);
         _board.PlaceTeam(_team2);
 
     }
 
-    public void PlayGame()
+    public Team PlayGame()
     {
         // let one team take a turn and then the other one, loop
-        // stop loop when the game is over.
+        // stop loop when the game is over and return winning team.
+        Team winningTeam = new Team();
+
         bool playing = true;
         while (playing)
         {
             bool validTurn = false;
-            while (!validTurn)
+            while (!validTurn && playing)
             {
+                // Team 1's turn
                 Console.Clear();
-                _board.DrawBoard();
+                _board.DrawBoard(_team1,_team2);
                 validTurn = TakeTurn(_team1);
+
+                // check winner:
+                if (!_team2._king._alive)
+                {
+                    winningTeam = _team1;
+                    playing = false;
+                }
+
             }
 
             validTurn = false;
-            while (!validTurn)
+            while (!validTurn && playing)
             {
                 Console.Clear();
-                _board.DrawBoard();
+                _board.DrawBoard(_team1,_team2);
                 validTurn = TakeTurn(_team2);
-            }
 
+                // check winner:
+                if (!_team1._king._alive)
+                {
+                    winningTeam = _team2;
+                    playing = false;
+                }
+            }
         }
+        return winningTeam;
+
         
     }
     public bool TakeTurn(Team team)
@@ -45,13 +64,17 @@ public class Game
         // setup
         Console.WriteLine();
         string teamColor;
+        Team opposingTeam;
         if (team == _team1)
         {
             teamColor = "White";
+            opposingTeam = _team2;
         }
         else
         {
             teamColor = "Black";
+            opposingTeam = _team1;
+
         }
 
         // User inputs which piece they want to move. Checks if it's a valid piece on their own team.
@@ -121,10 +144,11 @@ public class Game
                     validMove = true;
 
                     // if there is a piece there, kill it. 
-                    // NOTE: THIS IS BROKEN................
                     if (_board.CheckTile(coord2))
                     {
-                        _board.GetPiece(coord2).KillPiece();
+                        Piece killedPiece = opposingTeam.GetPiece(coord2);
+                        killedPiece.KillPiece();
+                        opposingTeam.UpdateTeam();
                     }
 
                     movingPiece.Move(coord2);

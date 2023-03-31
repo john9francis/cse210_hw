@@ -28,7 +28,7 @@ public class Board
 
     }
 
-    public void DrawBoard()
+    public void DrawBoard(Team t1, Team t2)
     {
         // the numbers and letters are for the edges of the board
         List<string> _numbers = new List<string>
@@ -46,7 +46,18 @@ public class Board
 
         // Put the pieces from the piecelist into their respective tiles
         ClearBoard();
-        foreach (Piece p in _pieceList)
+        // update the piece list.
+        UpdatePieceList(t1,t2);
+
+        foreach (Piece p in t1._teamPieces)
+        {
+            int letter = p._position[0];
+            int number = p._position[1];
+
+            // fill the correct tile
+            _tileList[letter][number].AddPiece(p);
+        }
+        foreach (Piece p in t2._teamPieces)
         {
             int letter = p._position[0];
             int number = p._position[1];
@@ -98,6 +109,13 @@ public class Board
         {
             _pieceList.Add(p);
         }
+    }
+
+    public void UpdatePieceList(Team t1, Team t2)
+    {
+        _pieceList.Clear();
+        PlaceTeam(t1);
+        PlaceTeam(t2);
     }
 
     public bool CheckTile(List<int> coordinate)

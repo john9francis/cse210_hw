@@ -10,8 +10,8 @@ class Program
         // AKA letter, than number.
 
         Game g = new Game();
-        g.PlayGame();
-
+        Team winner = g.PlayGame();
+        Console.WriteLine($"Congratulations, {winner._teamColor} team, you won!");
 
     }
 }
