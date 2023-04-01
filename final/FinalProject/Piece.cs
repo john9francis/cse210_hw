@@ -3,11 +3,11 @@ floating around.*/
 
 public abstract class Piece
 {
-    public string _symbol;
-    public List<int> _position;
-    public List<List<int>> _whereCanMove;
-    public string _pieceType;
-    public bool _alive;
+    private string _symbol;
+    private List<int> _position;
+    private List<List<int>> _whereCanMove;
+    protected string _pieceType;
+    private bool _alive;
 
     public Piece(int xpos, int ypos, string symbol="")
     {
@@ -22,6 +22,21 @@ public abstract class Piece
     {
         _position.Add(x);
         _position.Add(y);
+    }
+
+    public List<int> GetPosition()
+    {
+        return _position;
+    }
+
+    public string GetPieceType()
+    {
+        return _pieceType;
+    }
+
+    public bool GetAliveStatus()
+    {
+        return _alive;
     }
 
     public void Move(List<int> destination)
@@ -199,8 +214,8 @@ public class Bishop : Piece
 
 public class Pon : Piece
 {
-    string _color;
-    bool _firstMove;
+    private string _color;
+    private bool _firstMove;
     public Pon(int xpos, int ypos, string symbol="p", string color="White") : base(xpos,ypos,symbol)
     {
         _pieceType = "Pon";

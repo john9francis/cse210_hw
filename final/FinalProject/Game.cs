@@ -1,8 +1,8 @@
 public class Game
 {
-    Team _team1;
-    Team _team2;
-    Board _board;
+    private Team _team1;
+    private Team _team2;
+    private Board _board;
     public Game()
     {
         _team1 = new Team();
@@ -31,7 +31,7 @@ public class Game
                 validTurn = TakeTurn(_team1);
 
                 // check winner:
-                if (!_team2._king._alive)
+                if (!_team2.KingAlive())
                 {
                     winningTeam = _team1;
                     playing = false;
@@ -47,7 +47,7 @@ public class Game
                 validTurn = TakeTurn(_team2);
 
                 // check winner:
-                if (!_team1._king._alive)
+                if (!_team1.KingAlive())
                 {
                     winningTeam = _team2;
                     playing = false;
@@ -58,7 +58,7 @@ public class Game
 
         
     }
-    public bool TakeTurn(Team team)
+    private bool TakeTurn(Team team)
     {
         // returns true if the turn was successfully completed. 
         // setup
@@ -110,18 +110,18 @@ public class Game
         // now translate the coordinates to where the piece is.
         foreach(List<int> l in moveOptions)
         {
-            l[0] += movingPiece._position[0];
-            l[1] += movingPiece._position[1];
+            l[0] += movingPiece.GetPosition()[0];
+            l[1] += movingPiece.GetPosition()[1];
         }
 
         // now moveOptions contains the basic places the piece can move.
         // narrow down moveOptions even more by running it through the function:
-        moveOptions = WherePieceCanMove(moveOptions, team, movingPiece._position);
+        moveOptions = WherePieceCanMove(moveOptions, team, movingPiece.GetPosition());
 
         // extra options for pon:
-        if (movingPiece._pieceType == "Pon")
+        if (movingPiece.GetPieceType() == "Pon")
         {
-            moveOptions = ApplyPonRules(team, movingPiece._position, moveOptions, opposingTeam);
+            moveOptions = ApplyPonRules(team, movingPiece.GetPosition(), moveOptions, opposingTeam);
         }
 
         // if the piece literally can't move, return false.
@@ -173,7 +173,7 @@ public class Game
 
     }
 
-    public void TestList(List<List<int>> list)
+    private void TestList(List<List<int>> list)
     {
         foreach(List<int> l in list)
             {
@@ -182,7 +182,7 @@ public class Game
             Console.WriteLine();
     }
 
-    public List<List<int>> ApplyPonRules(Team ponTeam, List<int> ponPosition, List<List<int>> whereCanMove, Team opposingTeam)
+    private List<List<int>> ApplyPonRules(Team ponTeam, List<int> ponPosition, List<List<int>> whereCanMove, Team opposingTeam)
     {
         // step 1: if an opposing team piece is directly in front of the pon, delete that coord from whereCanMove.
         List<List<int>> opposingPieceCoords = GetOccupiedTiles(opposingTeam);
@@ -206,7 +206,7 @@ public class Game
         }
 
         // step 2: if there is a piece to the left or right of the pon, add it to the updatedList.
-        if (ponTeam._teamColor == "White")
+        if (ponTeam.GetColor() == "White")
         {
             // we're dealing with up and left and right
             List<int> left = new List<int>{ponPosition[0]-1,ponPosition[1]-1};
@@ -253,7 +253,7 @@ public class Game
 
 
 
-    public List<List<int>> WherePieceCanMove(List<List<int>> whereCanMove, Team team, List<int> pieceLocation)
+    private List<List<int>> WherePieceCanMove(List<List<int>> whereCanMove, Team team, List<int> pieceLocation)
     {
         // returns a list of coordinates where the piece can move WITHOUT same-team pieces blocking it.
 
@@ -363,7 +363,7 @@ public class Game
     }
 
     // BLOCKED LIST FUNCTIONS:==========================================================================
-    public List<List<int>> GetStraightBlockedList (
+    private List<List<int>> GetStraightBlockedList (
         List<List<int>> moveOptions,
         List<int> pieceLocation, 
         List<int> blockerLocation)
@@ -525,7 +525,7 @@ public class Game
     }
 
 
-    public List<List<int>> GetDiagonalBlockedList (
+    private List<List<int>> GetDiagonalBlockedList (
         List<List<int>> moveOptions,
         List<int> pieceLocation, 
         List<int> blockerLocation)
@@ -686,7 +686,7 @@ public class Game
 
     }
 
-    public List<List<int>> DeleteIdenticalEntries(List<List<int>> list1, List<List<int>> list2)
+    private List<List<int>> DeleteIdenticalEntries(List<List<int>> list1, List<List<int>> list2)
     {
         // returns an updated list1 with only the entries that are NOT in list2. 
         List<List<int>> updatedList = new List<List<int>>();
@@ -712,18 +712,18 @@ public class Game
 
     }
 
-    public List<List<int>> GetOccupiedTiles(Team team)
+    private List<List<int>> GetOccupiedTiles(Team team)
     {
         // returns a list of coordinates occupied by tiles in the team.
         List<List<int>> occupiedTiles = new List<List<int>>();
-        foreach(Piece p in team._teamPieces)
+        foreach(Piece p in team.GetTeamPieces())
         {
-            occupiedTiles.Add(p._position);
+            occupiedTiles.Add(p.GetPosition());
         }
         return occupiedTiles;
     }
 
-    public bool TileInRange(List<int> coordinate)
+    private bool TileInRange(List<int> coordinate)
     {
         if (coordinate[0] == -1||coordinate[1] == -1)
         {
@@ -735,21 +735,14 @@ public class Game
         }
     }
 
-    public void Clear2Lines()
-    {
-        Console.SetCursorPosition(0, Console.CursorTop - 2);
-        Console.Write(new string(' ', Console.WindowWidth));
-        Console.SetCursorPosition(0, Console.CursorTop - 1);
-        Console.Write(new string(' ', Console.WindowWidth));
-    }
 
-    public bool PieceOnTile(List<int> coordinate, Team team)
+    private bool PieceOnTile(List<int> coordinate, Team team)
     {
         // Check if there is a team piece on that coordinate
         bool existsPiece = false;
-        foreach(Piece p in team._teamPieces)
+        foreach(Piece p in team.GetTeamPieces())
         {
-            if (p._position.SequenceEqual(coordinate))
+            if (p.GetPosition().SequenceEqual(coordinate))
             {
                 existsPiece = true;
             }
@@ -759,7 +752,7 @@ public class Game
 
     
 
-    public List<int> InputToCoordinate(string input)
+    private List<int> InputToCoordinate(string input)
     {
         // takes in users input (e.g. A1) and returns coordinate (e.g. [0,0])
         input.Split();
@@ -781,19 +774,5 @@ public class Game
         
 
     }
-
-    public void CheckWinner()
-    {
-        // check which team has won
-        
-    }
-
-    public void MovePiece()
-    {
-        // ask user for which piece to move, where to move it, and then do that.
-
-    }
-
-
 
 }

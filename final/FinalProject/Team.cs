@@ -1,16 +1,16 @@
 public class Team
 {
-    public string _teamColor;
-    public List<Piece> _teamPieces;
+    private string _teamColor;
+    private List<Piece> _teamPieces;
     // initialize all the pieces:
-    public King _king;
-    public Queen _queen;
-    public Castle _c1;
-    public Castle _c2;
-    public Knight _n1;
-    public Knight _n2;
-    public Bishop _b1;
-    public Bishop _b2;
+    private King _king;
+    private Queen _queen;
+    private Castle _c1;
+    private Castle _c2;
+    private Knight _n1;
+    private Knight _n2;
+    private Bishop _b1;
+    private Bishop _b2;
     
     // we will initialize the pons upon initializing the class
 
@@ -72,12 +72,34 @@ public class Team
 
     }
 
+    public bool KingAlive()
+    {
+        if (_king.GetAliveStatus())
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public List<Piece> GetTeamPieces()
+    {
+        return _teamPieces;
+    }
+
+    public string GetColor()
+    {
+        return _teamColor;
+    }
+
     public void UpdateTeam()
     {
         // removes any unAlive pieces from the team.
         for (int i=0; i<_teamPieces.Count; i++)
         {
-            if (!_teamPieces[i]._alive)
+            if (!_teamPieces[i].GetAliveStatus())
             {
                 _teamPieces.RemoveAt(i);
             }
@@ -90,7 +112,7 @@ public class Team
         int pieceIndex = 0;
         for (int i=0; i<_teamPieces.Count; i++)
         {
-            if (_teamPieces[i]._position.SequenceEqual(coordinate))
+            if (_teamPieces[i].GetPosition().SequenceEqual(coordinate))
             {
                 pieceIndex = i;
             }

@@ -1,6 +1,6 @@
 public class Tile
 {
-    public List<Piece> _onTile;
+    private List<Piece> _onTile;
 
     public Tile()
     {
@@ -10,6 +10,11 @@ public class Tile
     {
         _onTile = new List<Piece>();
         AddPiece(p);
+    }
+
+    public void ClearTile()
+    {
+        _onTile.Clear();
     }
 
     public bool TileFull()

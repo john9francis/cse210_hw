@@ -2,9 +2,10 @@ public class Board
 {
     // Holds all the tiles;
     private List<List<Tile>> _tileList;
-    public List<Piece> _pieceList;
-    public int _size;
+    private List<Piece> _pieceList;
+    private int _size;
 
+    // Getters and setters for encapsulation:
 
     public Board()
     {
@@ -49,18 +50,18 @@ public class Board
         // update the piece list.
         UpdatePieceList(t1,t2);
 
-        foreach (Piece p in t1._teamPieces)
+        foreach (Piece p in t1.GetTeamPieces())
         {
-            int letter = p._position[0];
-            int number = p._position[1];
+            int letter = p.GetPosition()[0];
+            int number = p.GetPosition()[1];
 
             // fill the correct tile
             _tileList[letter][number].AddPiece(p);
         }
-        foreach (Piece p in t2._teamPieces)
+        foreach (Piece p in t2.GetTeamPieces())
         {
-            int letter = p._position[0];
-            int number = p._position[1];
+            int letter = p.GetPosition()[0];
+            int number = p.GetPosition()[1];
 
             // fill the correct tile
             _tileList[letter][number].AddPiece(p);
@@ -87,31 +88,27 @@ public class Board
         }
     }
 
-    public void ClearBoard()
+    private void ClearBoard()
     {
         foreach (List<Tile> row in _tileList)
         {
             foreach (Tile tile in row)
             {
-                tile._onTile.Clear();
+                tile.ClearTile();
             }
         }
     }
 
-    public void PlacePiece(Piece p)
-    {
-        _pieceList.Add(p);
-    }
 
     public void PlaceTeam(Team t)
     {
-        foreach (Piece p in t._teamPieces)
+        foreach (Piece p in t.GetTeamPieces())
         {
             _pieceList.Add(p);
         }
     }
 
-    public void UpdatePieceList(Team t1, Team t2)
+    private void UpdatePieceList(Team t1, Team t2)
     {
         _pieceList.Clear();
         PlaceTeam(t1);
@@ -134,14 +131,6 @@ public class Board
         }
     }
 
-    public void ClearTile(List<int> coordinate)
-    {
-        int row = coordinate[0];
-        int column = coordinate[1];
-        Tile tile = _tileList[row][column];
-        tile._onTile.Clear();
-    }
-
     public Piece GetPiece(List<int> coordinate)
     {
         //Takes in a coordinate and returns the piece on there.
@@ -150,6 +139,4 @@ public class Board
         Tile tile = _tileList[row][column];
         return tile.GetPiece();
     }
-
-  
 }

@@ -10,12 +10,20 @@ class Program
         // AKA letter, than number.
 
         // first, display start message.
-        string startMessage = "Welcome to the Console Chess game, written by John Francis. " 
-        + "In this game, the white team pieces are represented by letters. k is king, q is queen, "
-        + "n is knight, b is bishop, c is castle, and p is pon. For the black team, the pieces "
-        + "are represented by symbols. ! is king, ? is queen, $ is knight, / is bishop, # is "
-        + "castle, and + is pon. For the moment, there isn't a mechanism for detecting \"check\" "
-        + "or \"checkmate,\" so the way to win is simply by killing the opposing team's king. "
+        string startMessage = 
+        "Welcome to the Console Chess game, written by John Francis. \n" 
+        + "In this game, the white team pieces are represented by letters, \n"
+        + "and the black team pieces are represented by symbols. \n\n"
+        + "White team:    Black team: \n"
+        + "\"k\": King    \"!\": King   \n"
+        + "\"q\": Queen   \"?\": Queen  \n"
+        + "\"c\": Castle  \"#\": Castle \n"
+        + "\"b\": Bishop  \"/\": Bishop \n"
+        + "\"n\": Knight  \"$\": Knight \n"
+        + "\"p\": Pon     \"+\": Pon    \n"
+        + "\n"
+        + "For the moment, there isn't a mechanism for detecting \"check\" or \"checkmate,\" \n"
+        + "so the way to win is simply by killing the opposing team's king. \n"
         + "enjoy! (press enter to play): ";
 
         Console.Clear();
@@ -24,7 +32,7 @@ class Program
 
         Game g = new Game();
         Team winner = g.PlayGame();
-        Console.WriteLine($"Congratulations, {winner._teamColor} team, you won!");
+        Console.WriteLine($"Congratulations, {winner.GetColor()} team, you won!");
 
     }
 }
