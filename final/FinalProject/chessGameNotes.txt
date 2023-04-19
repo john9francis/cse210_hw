@@ -30,3 +30,40 @@ Team:
 - pieces in play
 - dead pieces
 - points
+- possibility for AI team
+
+Display:
+- displays everything.
+GetInfoFromUser
+
+
+REVAMP:---------------------------------------
+Piece:
+_moveOptions
+_killOptions
+_pointValue
+_inDanger
+
+Team:
+bool TakeTurns *(piece, start end)
+
+AI team:
+- level 1: random
+- level 2: using strategies, etc. 
+
+Board:(team1, team2)
+Sets up a valid board
+Updates _moveOptions and _killOptions for each piece.
+
+Tile: neccisary?
+
+Game:
+_boardType
+_team1
+_team2
+team1 turn:
+team2 turn:
+
+Display:
+get's user input
+display everything

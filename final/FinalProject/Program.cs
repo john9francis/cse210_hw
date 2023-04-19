@@ -10,6 +10,7 @@ class Program
         // AKA letter, than number.
 
         // first, display start message.
+        
         string startMessage = 
         "Welcome to the Console Chess game, written by John Francis. \n" 
         + "In this game, the white team pieces are represented by letters, \n"
@@ -33,6 +34,7 @@ class Program
         Game g = new Game();
         Team winner = g.PlayGame();
         Console.WriteLine($"Congratulations, {winner.GetColor()} team, you won!");
+        
 
     }
 }

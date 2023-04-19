@@ -1,11 +1,30 @@
 public class Board
 {
-    // Holds all the tiles;
+    // All the information about the board.;
     private List<List<Tile>> _tileList;
     private List<Piece> _pieceList;
     private int _size;
+    private Team _t1;
+    private Team _t2;
 
     // Getters and setters for encapsulation:
+    public void SetTeams(Team t1, Team t2)
+    {
+        _t1 = t1;
+        _t2 = t2;
+        UpdatePieceList();
+    }
+
+    public int GetBoardSize()
+    {
+        return _size;
+    }
+
+    public List<List<Tile>> GetTileList()
+    {
+        // this probably could be more private...
+        return _tileList;
+    }
 
     public Board()
     {
@@ -13,7 +32,7 @@ public class Board
         _tileList = new List<List<Tile>>();
         _size = 8;
 
-        // fill up the tileList:
+        // fill up the tileList with empty tiles:
         for (int i=0; i<_size; i++)
         {
             List<Tile> row = new List<Tile>();
@@ -29,28 +48,14 @@ public class Board
 
     }
 
-    public void DrawBoard(Team t1, Team t2)
+    public void UpdateBoard()
     {
-        // the numbers and letters are for the edges of the board
-        List<string> _numbers = new List<string>
-        {"[1]","[2]","[3]","[4]","[5]","[6]","[7]","[8]"};
-        List<string> _letters = new List<string>
-        {"[A]","[B]","[C]","[D]","[E]","[F]","[G]","[H]"};
-
-        // Draw the numbers;
-        Console.Write("   "); // this is the top left corner space
-        foreach (string num in _numbers)
-        {
-            Console.Write(num);
-        }
-        Console.WriteLine();
-
         // Put the pieces from the piecelist into their respective tiles
         ClearBoard();
         // update the piece list.
-        UpdatePieceList(t1,t2);
+        UpdatePieceList();
 
-        foreach (Piece p in t1.GetTeamPieces())
+        foreach (Piece p in _t1.GetTeamPieces())
         {
             int letter = p.GetPosition()[0];
             int number = p.GetPosition()[1];
@@ -58,7 +63,7 @@ public class Board
             // fill the correct tile
             _tileList[letter][number].AddPiece(p);
         }
-        foreach (Piece p in t2.GetTeamPieces())
+        foreach (Piece p in _t2.GetTeamPieces())
         {
             int letter = p.GetPosition()[0];
             int number = p.GetPosition()[1];
@@ -67,25 +72,6 @@ public class Board
             _tileList[letter][number].AddPiece(p);
         }
 
-        // draw a letter followed by a row of tiles.
-        for (int i=0; i<_size; i++)
-        {
-            Console.Write(_letters[i]);
-            for (int j=0; j<_size; j++)
-            {
-                //Console.Write(_tileList[i][j].TileString());
-                Tile tile = _tileList[i][j];
-                if (tile.TileFull())
-                {
-                    Console.Write($"[{tile.GetPiece().GetSymbol()}]");
-                }
-                else
-                {
-                    Console.Write($"[ ]");
-                }
-            }
-            Console.WriteLine();
-        }
     }
 
     private void ClearBoard()
@@ -99,20 +85,17 @@ public class Board
         }
     }
 
-
-    public void PlaceTeam(Team t)
+    private void UpdatePieceList()
     {
-        foreach (Piece p in t.GetTeamPieces())
+        _pieceList.Clear();
+        foreach (Piece p in _t1.GetTeamPieces())
         {
             _pieceList.Add(p);
         }
-    }
-
-    private void UpdatePieceList(Team t1, Team t2)
-    {
-        _pieceList.Clear();
-        PlaceTeam(t1);
-        PlaceTeam(t2);
+        foreach (Piece p in _t2.GetTeamPieces())
+        {
+            _pieceList.Add(p);
+        }
     }
 
     public bool CheckTile(List<int> coordinate)

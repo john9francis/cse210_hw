@@ -3,13 +3,15 @@ public class Game
     private Team _team1;
     private Team _team2;
     private Board _board;
+    private Display _display;
     public Game()
     {
         _team1 = new Team();
         _team2 = new Team("Black");
         _board = new Board();
-        _board.PlaceTeam(_team1);
-        _board.PlaceTeam(_team2);
+        _board.SetTeams(_team1, _team2);
+
+        _display = new Display(_board);
 
     }
 
@@ -27,7 +29,7 @@ public class Game
             {
                 // Team 1's turn
                 Console.Clear();
-                _board.DrawBoard(_team1,_team2);
+                _display.DisplayBoard();
                 validTurn = TakeTurn(_team1);
 
                 // check winner:
@@ -38,12 +40,12 @@ public class Game
                 }
 
             }
-
+            
             validTurn = false;
             while (!validTurn && playing)
             {
                 Console.Clear();
-                _board.DrawBoard(_team1,_team2);
+                _display.DisplayBoard();
                 validTurn = TakeTurn(_team2);
 
                 // check winner:
@@ -53,6 +55,8 @@ public class Game
                     playing = false;
                 }
             }
+            
+            
         }
         return winningTeam;
 
@@ -173,6 +177,58 @@ public class Game
 
     }
 
+    /* SETTING UP CHECKMATE RULES:
+    private List<List<int>> FindDangerSpots(Team opposingTeam)
+    {
+        //returns a list of coordinates where an opposing team piece could kill.
+        List<List<int>> dangerList = new List<List<int>>();
+        foreach(Piece p in opposingTeam.GetTeamPieces())
+        {
+            // different rules for pon...
+            if (p.GetPieceType() == "Pon")
+            {
+                // do something different
+            }
+            else
+            {
+                foreach (List<int> coord in p.GetWhereCanMove())
+                {
+                    dangerList.Add(coord);
+                }
+            }
+            
+        }
+
+    }
+
+    private bool Check(Team teamOfInterest)
+    {
+        Team opposingTeam;
+        if (teamOfInterest == _team1)
+        {
+            opposingTeam = _team2;
+        }
+        else
+        {
+            opposingTeam = _team1;
+        }
+
+        // see where the king can move on teamOfInterest
+        Piece king;
+        foreach (Piece p in teamOfInterest.GetTeamPieces())
+        {
+            if (p.GetPieceType() == "King")
+            {
+                king = p;
+            }
+        }
+    }
+
+    private bool CheckMate()
+    {
+
+    }
+
     private void TestList(List<List<int>> list)
     {
         foreach(List<int> l in list)
@@ -181,6 +237,7 @@ public class Game
             }
             Console.WriteLine();
     }
+    */
 
     private List<List<int>> ApplyPonRules(Team ponTeam, List<int> ponPosition, List<List<int>> whereCanMove, Team opposingTeam)
     {
@@ -682,9 +739,8 @@ public class Game
 
         // finally return moveOptions.
         return moveOptions;
-
-
     }
+    //==============================================================================
 
     private List<List<int>> DeleteIdenticalEntries(List<List<int>> list1, List<List<int>> list2)
     {

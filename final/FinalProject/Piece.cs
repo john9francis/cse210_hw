@@ -9,7 +9,7 @@ public abstract class Piece
     protected string _pieceType;
     private bool _alive;
 
-    public Piece(int xpos, int ypos, string symbol="")
+    protected Piece(int xpos, int ypos, string symbol="")
     {
         _symbol = symbol;
         _position = new List<int>{xpos,ypos};
@@ -17,12 +17,6 @@ public abstract class Piece
         _alive = true;
     }
 
-
-    public void SetPosition(int x, int y)
-    {
-        _position.Add(x);
-        _position.Add(y);
-    }
 
     public List<int> GetPosition()
     {
@@ -62,9 +56,6 @@ public abstract class Piece
     }
 
 }
-
-
-
 
 
 public class King : Piece

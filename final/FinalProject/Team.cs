@@ -120,6 +120,4 @@ public class Team
         return _teamPieces[pieceIndex];
     }
 
-
-    
 }
