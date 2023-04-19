@@ -4,15 +4,16 @@ public class Game
     private Team _team2;
     private Board _board;
     private Display _display;
+
     public Game()
     {
         _team1 = new Team();
         _team2 = new Team("Black");
+
         _board = new Board();
         _board.SetTeams(_team1, _team2);
 
         _display = new Display(_board);
-
     }
 
     public Team PlayGame()
@@ -67,16 +68,13 @@ public class Game
         // returns true if the turn was successfully completed. 
         // setup
         Console.WriteLine();
-        string teamColor;
         Team opposingTeam;
         if (team == _team1)
         {
-            teamColor = "White";
             opposingTeam = _team2;
         }
         else
         {
-            teamColor = "Black";
             opposingTeam = _team1;
 
         }
@@ -88,8 +86,7 @@ public class Game
 
         while (!validPiece)
         {
-            Console.Write($"{teamColor} team, Which piece would you like to move? (e.g. A1): ");
-            string input = Console.ReadLine();
+            string input = _display.GetMovingPiece(team);
             coord = InputToCoordinate(input);
             if (TileInRange(coord) && PieceOnTile(coord,team))
             {
@@ -142,8 +139,7 @@ public class Game
 
         while (!validMove)
         {
-            Console.Write("Where would you like to move this piece to? (e.g. C1): ");
-            string input = Console.ReadLine();
+            string input = _display.GetWhereToMove();
             coord2 = InputToCoordinate(input);
 
             foreach(List<int> l in moveOptions)

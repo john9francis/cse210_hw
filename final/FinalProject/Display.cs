@@ -43,4 +43,18 @@ public class Display
             Console.WriteLine();
         }
     }
+
+    // Getting inputs and stuff
+    public string GetMovingPiece(Team t)
+    {
+        string teamColor = t.GetColor();
+        Console.Write($"{teamColor} team, which piece would you like to move? (e.g. A1): ");
+        return Console.ReadLine();
+    }
+
+    public string GetWhereToMove()
+    {
+        Console.Write($"Where would you like to move this piece to? (e.g. C3): ");
+        return Console.ReadLine();
+    }
 }
