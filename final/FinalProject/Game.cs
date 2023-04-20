@@ -96,8 +96,7 @@ public class Game
             }
             else
             {
-                Console.Write("Invalid entry. Make sure you entered in a coordinate of a piece on your team. (press enter)");
-                Console.ReadLine();
+                _display.InvalidPiece();
             }
         }
 
@@ -128,8 +127,7 @@ public class Game
         // if the piece literally can't move, return false.
         if (moveOptions.Count == 0)
         {
-            Console.WriteLine("This piece can't move. Please choose a different piece. (press enter): ");
-            Console.ReadLine();
+            _display.PieceCantMove();
             return false;
         }
 
@@ -163,8 +161,7 @@ public class Game
             }
             if (!validMove)
             {
-                Console.Write("Invalid move. Please choose a different place to move. (press enter): ");
-                Console.ReadLine();
+                _display.InvalidMove();   
             }
         }
 

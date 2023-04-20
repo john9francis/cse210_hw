@@ -57,4 +57,23 @@ public class Display
         Console.Write($"Where would you like to move this piece to? (e.g. C3): ");
         return Console.ReadLine();
     }
+
+    public void InvalidPiece()
+    {
+        Console.Write("Invalid entry. Make sure you entered in a coordinate of a piece on your team. (press enter): ");
+        Console.ReadLine();
+    }
+
+    public void InvalidMove()
+    {
+        Console.Write("Invalid move. Please choose a different place to move. (press enter): ");
+        Console.ReadLine();
+    }
+
+    public void PieceCantMove()
+
+    {
+        Console.Write("This piece can't move. Please choose a different piece. (press enter): ");
+        Console.ReadLine();
+    }
 }
